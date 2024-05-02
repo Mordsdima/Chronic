@@ -1,0 +1,30 @@
+name: CI Build
+
+on:
+    push:
+        branches: ["main"]
+
+jobs: 
+    build-linux:
+        runs-on: ubuntu-latest
+
+        steps: 
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Setup vlang
+              uses: vlang/setup-v@v1.4
+
+            - name: Build raylib
+              working-directory: ./client
+              run: make
+
+            - name: Build production
+              working-directory: ./client
+              run: make build
+
+            - name: Upload artifacts 
+              uses: actions/upload-artifact@v4
+              with:
+                name: linux
+                path: ./client/client
