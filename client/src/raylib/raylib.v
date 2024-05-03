@@ -39,6 +39,30 @@ pub fn C.EndMode2D()
 pub fn C.EndDrawing()
 pub fn C.ClearBackground(color C.Color)
 
+// rtextures (need to be enabled in raylib)
+pub struct C.Image {
+pub:
+	// there also a void *data but DONT EDIT IT MANUALLY, so its not included
+	width i32
+	height i32
+	mipmaps i32 // how to bomb the pc? just set it to max of 32 bit int
+	format i32
+}
+
+pub struct C.Texture {
+pub:
+	id u8 // do not edit manually!!
+	width i32
+	height i32
+	mipmaps i32
+	format i32
+}
+
+pub fn C.LoadTexture(file_name &char) C.Texture
+pub fn C.DrawTexture(texture C.Texture, posX i32, posY i32, tint C.Color)
+
+// Wrapper
+
 pub fn init_window(width int, height int, title string) {
 	C.InitWindow(width, height, title.str)
 }
@@ -73,4 +97,13 @@ pub fn end_drawing() {
 
 pub fn clear_background(color C.Color) {
 	C.ClearBackground(color)
+}
+
+// wrapper for rtextures
+pub fn load_texture(file_name string) C.Texture {
+	return C.LoadTexture(file_name.str)
+}
+
+pub fn draw_texture(texture C.Texture, pos_x i32, pos_y i32, tint C.Color) {
+	C.DrawTexture(texture, pos_x, pos_y, tint)
 }

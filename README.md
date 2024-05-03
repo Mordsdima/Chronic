@@ -20,3 +20,7 @@ make devbuild # (development) same as ^^
 
 make devrun # (development) simply v . && ./client, read about depends ^^^
 ```
+
+## license
+
+its MIT (maybe soon will be relicensed in ISC), read more in [LICENSE file](./LICENSE)

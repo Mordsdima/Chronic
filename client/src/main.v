@@ -1,11 +1,20 @@
 module main
 
 import raylib
+import log
+
+
 
 @[heap]
 pub struct State {
 pub mut:
 	camera C.Camera2D
+	textures Textures
+}
+
+pub struct Textures {
+pub mut:
+	player C.Texture
 }
 
 type Userdata = State
@@ -17,7 +26,8 @@ fn main() {
 			target: C.Vector2{ x: 0, y: 0 },
 			rotation: 0,
 			zoom: 1
-		}
+		},
+		textures: Textures{}
 	}
 
 
@@ -31,7 +41,11 @@ fn main() {
 	app.deinit_cb = app.deinit
 	app.init_cb = app.init
 
+	
 	app.initialize()
+	log.info("Loading textures..")
+	app_state.textures.player = raylib.load_texture("./assets/player.png")
+	log.info("Finished!")
 	app.main_loop()
 	app.deinitialize()
 }
@@ -39,15 +53,26 @@ fn main() {
 pub fn (mut app App) render() {
 	raylib.begin_drawing()
 
-	raylib.begin_mode_2d(app.userdata.camera)
-	raylib.end_mode_2d()
-
 	raylib.clear_background(C.Color{
 		r: u8(0x64)
 		g: u8(0x95)
 		b: u8(0xed)
 		a: u8(0xff)
 	})
+
+	raylib.begin_mode_2d(app.userdata.camera)
+
+	// rendering a player
+	raylib.draw_texture(app.userdata.textures.player, 0, 0, C.Color{
+		r: u8(0xff)
+		g: u8(0xff)
+		b: u8(0xff)
+		a: u8(0xff)
+	})
+
+	raylib.end_mode_2d()
+
+	
 
 	raylib.end_drawing()
 }
