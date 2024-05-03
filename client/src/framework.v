@@ -31,7 +31,7 @@ pub mut:
 pub fn (mut app App) initialize() {
 	// We here initializating the raylib and then, init_cb
 
-	log.info("Initializating framework...")
+	log.info('Initializating framework...')
 
 	raylib.init_window(app.width, app.height, app.title)
 
@@ -52,5 +52,5 @@ pub fn (mut app App) main_loop() {
 pub fn (mut app App) deinitialize() {
 	raylib.close_window()
 	app.deinit_cb()
-	log.info("Deinitializated framework.")
+	log.info('Deinitializated framework.')
 }

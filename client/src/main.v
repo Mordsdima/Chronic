@@ -3,13 +3,13 @@ module main
 import raylib
 import log
 
-
-
 @[heap]
 pub struct State {
 pub mut:
-	camera C.Camera2D
-	textures Textures
+	camera       C.Camera2D
+	textures     Textures
+	player_pos_x i32
+	player_pos_y i32
 }
 
 pub struct Textures {
@@ -22,17 +22,22 @@ type Userdata = State
 fn main() {
 	mut app_state := State{
 		camera: C.Camera2D{
-			offset: C.Vector2{ x: 0, y: 0 },
-			target: C.Vector2{ x: 0, y: 0 },
-			rotation: 0,
+			offset: C.Vector2{
+				x: 800 / 2
+				y: 600 / 2
+			}
+			target: C.Vector2{
+				x: 32
+				y: 32
+			}
+			rotation: 0
 			zoom: 1
-		},
+		}
 		textures: Textures{}
 	}
 
-
 	mut app := App{
-		title: 'Chronical',
+		title: 'Chronical'
 		userdata: &app_state
 	}
 
@@ -41,11 +46,10 @@ fn main() {
 	app.deinit_cb = app.deinit
 	app.init_cb = app.init
 
-	
 	app.initialize()
-	log.info("Loading textures..")
-	app_state.textures.player = raylib.load_texture("./assets/player.png")
-	log.info("Finished!")
+	log.info('Loading textures..')
+	app_state.textures.player = raylib.load_texture('./assets/player.png')
+	log.info('Finished!')
 	app.main_loop()
 	app.deinitialize()
 }
@@ -63,7 +67,8 @@ pub fn (mut app App) render() {
 	raylib.begin_mode_2d(app.userdata.camera)
 
 	// rendering a player
-	raylib.draw_texture(app.userdata.textures.player, 0, 0, C.Color{
+	raylib.draw_texture(app.userdata.textures.player, app.userdata.player_pos_x, app.userdata.player_pos_y,
+		C.Color{
 		r: u8(0xff)
 		g: u8(0xff)
 		b: u8(0xff)
@@ -72,12 +77,13 @@ pub fn (mut app App) render() {
 
 	raylib.end_mode_2d()
 
-	
-
 	raylib.end_drawing()
 }
 
 pub fn (mut app App) update() {
+	if raylib.is_key_pressed(raylib.Keys.key_a) {
+		println('a')
+	}
 }
 
 pub fn (mut app App) deinit() {
