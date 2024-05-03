@@ -34,6 +34,8 @@ pub fn C.SetTargetFPS(fps int)
 pub fn C.WindowShouldClose() bool
 pub fn C.CloseWindow()
 pub fn C.BeginDrawing()
+pub fn C.BeginMode2D(camera C.Camera2D)
+pub fn C.EndMode2D()
 pub fn C.EndDrawing()
 pub fn C.ClearBackground(color C.Color)
 
@@ -51,6 +53,14 @@ pub fn window_should_close() bool {
 
 pub fn close_window() {
 	C.CloseWindow()
+}
+
+pub fn begin_mode_2d(camera C.Camera2D) {
+	C.BeginMode2D(camera)
+}
+
+pub fn end_mode_2d() {
+	C.EndMode2D()
 }
 
 pub fn begin_drawing() {

@@ -1,7 +1,7 @@
 # Binaries for programs and plugins
 main
-./client/client
-./server/server
+client/client
+server/server
 *.exe
 *.exe~
 *.so
