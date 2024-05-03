@@ -8,11 +8,25 @@ module raylib
 #include <raylib.h>
 
 pub struct C.Color {
-pub:
+pub mut: // i think it not should be mutable, but its can be edited
 	r u8
 	g u8
 	b u8
 	a u8
+}
+
+pub struct C.Vector2 {
+pub mut:
+	x f32
+	y f32
+}
+
+pub struct C.Camera2D {
+pub mut:
+	offset   C.Vector2
+	target   C.Vector2
+	rotation f32
+	zoom     f32
 }
 
 pub fn C.InitWindow(width int, height int, title &char)
