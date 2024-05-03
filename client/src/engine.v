@@ -19,6 +19,8 @@ pub:
 	height int    = 600
 	title  string = '(empty)'
 pub mut:
+	userdata &Userdata = unsafe { nil }
+
 	render_cb RenderFunction = fn () {}
 	update_cb UpdateFunction = fn () {}
 	init_cb   InitFunction   = fn () {}

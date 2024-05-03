@@ -2,7 +2,7 @@ V ?= v
 MAKE ?= make
 
 libraylib.a: 
-	cd raylib/src && make && cd ../..
+	cd raylib/src && $(MAKE) && cd ../.. 
 
 build: libraylib.a
 	$(V) -prod .

@@ -2,9 +2,28 @@ module main
 
 import raylib
 
+@[heap]
+pub struct State {
+pub mut:
+	camera C.Camera2D
+}
+
+type Userdata = State
+
 fn main() {
+	mut app_state := State{
+		camera: C.Camera2D{
+			offset: C.Vector2{ x: 0, y: 0 },
+			target: C.Vector2{ x: 0, y: 0 },
+			rotation: 0,
+			zoom: 1
+		}
+	}
+
+
 	mut app := App{
-		title: 'Chronical'
+		title: 'Chronical',
+		userdata: &app_state
 	}
 
 	app.render_cb = app.render
@@ -19,6 +38,9 @@ fn main() {
 
 pub fn (mut app App) render() {
 	raylib.begin_drawing()
+
+	raylib.begin_mode_2d(app.userdata.camera)
+	raylib.end_mode_2d()
 
 	raylib.clear_background(C.Color{
 		r: u8(0x64)
