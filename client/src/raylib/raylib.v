@@ -39,6 +39,7 @@ pub fn C.EndMode2D()
 pub fn C.EndDrawing()
 pub fn C.ClearBackground(color C.Color)
 pub fn C.IsKeyPressed(key i32) bool
+pub fn C.IsKeyDown(key i32) bool
 
 // rtextures (need to be enabled in raylib)
 pub struct C.Image {
@@ -61,6 +62,7 @@ pub:
 
 pub fn C.LoadTexture(file_name &char) C.Texture
 pub fn C.DrawTexture(texture C.Texture, posX i32, posY i32, tint C.Color)
+pub fn C.DrawTextureV(texture C.Texture, position C.Vector2, tint C.Color)
 
 // Wrapper
 
@@ -109,8 +111,16 @@ pub fn draw_texture(texture C.Texture, pos_x i32, pos_y i32, tint C.Color) {
 	C.DrawTexture(texture, pos_x, pos_y, tint)
 }
 
+pub fn draw_texture_v(texture C.Texture, position C.Vector2, tint C.Color) {
+	C.DrawTextureV(texture, position, tint)
+}
+
 pub fn is_key_pressed(key Keys) bool {
 	return C.IsKeyPressed(i32(key))
+}
+
+pub fn is_key_down(key Keys) bool {
+	return C.IsKeyDown(i32(key))
 }
 
 pub enum Keys {

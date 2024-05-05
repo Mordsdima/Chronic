@@ -8,8 +8,7 @@ pub struct State {
 pub mut:
 	camera       C.Camera2D
 	textures     Textures
-	player_pos_x i32
-	player_pos_y i32
+	player_pos   C.Vector2 = C.Vector2{ x: 0, y: 0 }
 }
 
 pub struct Textures {
@@ -17,7 +16,7 @@ pub mut:
 	player C.Texture
 }
 
-type Userdata = State
+type Userdata = State // here defining the "userdata" type instead of void* like in c libs, framework it needs, (its also can be voidptr)
 
 fn main() {
 	mut app_state := State{
@@ -67,7 +66,7 @@ pub fn (mut app App) render() {
 	raylib.begin_mode_2d(app.userdata.camera)
 
 	// rendering a player
-	raylib.draw_texture(app.userdata.textures.player, app.userdata.player_pos_x, app.userdata.player_pos_y,
+	raylib.draw_texture_v(app.userdata.textures.player, app.userdata.player_pos
 		C.Color{
 		r: u8(0xff)
 		g: u8(0xff)
@@ -81,8 +80,14 @@ pub fn (mut app App) render() {
 }
 
 pub fn (mut app App) update() {
-	if raylib.is_key_pressed(raylib.Keys.key_a) {
-		println('a')
+	if raylib.is_key_down(raylib.Keys.key_a) {
+		app.userdata.player_pos.x -= 0.01
+	} else if raylib.is_key_down(raylib.Keys.key_d) {
+		app.userdata.player_pos.x += 0.01
+	} else if raylib.is_key_down(raylib.Keys.key_w) {
+		app.userdata.player_pos.y -= 0.01
+	} else if raylib.is_key_down(raylib.Keys.key_s) {
+		app.userdata.player_pos.y += 0.01
 	}
 }
 
