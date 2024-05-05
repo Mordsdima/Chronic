@@ -6,6 +6,8 @@ module raylib
 #flag -I @VMODROOT/externals/include
 #flag -lm
 #include <raylib.h>
+#include <raymath.h> 
+// ^^ for raymath bindings
 
 pub struct C.Color {
 pub mut: // i think it not should be mutable, but its can be edited
@@ -40,6 +42,7 @@ pub fn C.EndDrawing()
 pub fn C.ClearBackground(color C.Color)
 pub fn C.IsKeyPressed(key i32) bool
 pub fn C.IsKeyDown(key i32) bool
+pub fn C.GetMousePosition() C.Vector2
 
 // rtextures (need to be enabled in raylib)
 pub struct C.Image {
@@ -53,7 +56,7 @@ pub:
 
 pub struct C.Texture {
 pub:
-	id      u8 // do not edit manually!!
+	id      u32 // do not edit manually!!
 	width   i32
 	height  i32
 	mipmaps i32
@@ -63,6 +66,11 @@ pub:
 pub fn C.LoadTexture(file_name &char) C.Texture
 pub fn C.DrawTexture(texture C.Texture, posX i32, posY i32, tint C.Color)
 pub fn C.DrawTextureV(texture C.Texture, position C.Vector2, tint C.Color)
+pub fn C.DrawTextureEx(texture C.Texture, position C.Vector2, rotation f32, scale f32, tint C.Color)
+
+// raymath
+
+pub fn C.Vector2Subtract(v1 C.Vector2, v2 C.Vector2) C.Vector2
 
 // Wrapper
 
@@ -102,6 +110,16 @@ pub fn clear_background(color C.Color) {
 	C.ClearBackground(color)
 }
 
+pub fn get_mouse_position() C.Vector2 {
+	return C.GetMousePosition()
+}
+
+// wrapper for raymath
+
+pub fn vector2_subtract(v1 C.Vector2, v2 C.Vector2) C.Vector2 {
+	return C.Vector2Subtract(v1, v2)
+}
+
 // wrapper for rtextures
 pub fn load_texture(file_name string) C.Texture {
 	return C.LoadTexture(file_name.str)
@@ -113,6 +131,10 @@ pub fn draw_texture(texture C.Texture, pos_x i32, pos_y i32, tint C.Color) {
 
 pub fn draw_texture_v(texture C.Texture, position C.Vector2, tint C.Color) {
 	C.DrawTextureV(texture, position, tint)
+}
+
+pub fn draw_texture_ex(texture C.Texture, position C.Vector2, rotation f32, scale f32, tint C.Color) {
+	C.DrawTextureEx(texture, position, rotation, scale, tint)
 }
 
 pub fn is_key_pressed(key Keys) bool {

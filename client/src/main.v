@@ -2,6 +2,7 @@ module main
 
 import raylib
 import log
+import math
 
 @[heap]
 pub struct State {
@@ -9,6 +10,7 @@ pub mut:
 	camera       C.Camera2D
 	textures     Textures
 	player_pos   C.Vector2 = C.Vector2{ x: 0, y: 0 }
+	player_ang   f32       = 0.0
 }
 
 pub struct Textures {
@@ -66,7 +68,7 @@ pub fn (mut app App) render() {
 	raylib.begin_mode_2d(app.userdata.camera)
 
 	// rendering a player
-	raylib.draw_texture_v(app.userdata.textures.player, app.userdata.player_pos
+	raylib.draw_texture_ex(app.userdata.textures.player, app.userdata.player_pos, app.userdata.player_ang, 1
 		C.Color{
 		r: u8(0xff)
 		g: u8(0xff)
@@ -89,6 +91,17 @@ pub fn (mut app App) update() {
 	} else if raylib.is_key_down(raylib.Keys.key_s) {
 		app.userdata.player_pos.y += 0.01
 	}
+
+	app.userdata.camera.target = C.Vector2 {
+		x: app.userdata.player_pos.x + 32,
+		y: app.userdata.player_pos.y + 32
+	}
+
+	mouse_pos := raylib.get_mouse_position()
+	direction := raylib.vector2_subtract(mouse_pos, C.Vector2{ x: app.width/2, y: app.height/2 })
+	angle := f32(math.degrees(math.atan2(direction.y, direction.x)))
+
+	app.userdata.player_ang = angle
 }
 
 pub fn (mut app App) deinit() {

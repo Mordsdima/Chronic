@@ -8,6 +8,8 @@ server/server
 *.dylib
 *.dll
 
+auth_server/venv
+
 # Ignore binary output folders
 bin/
 
