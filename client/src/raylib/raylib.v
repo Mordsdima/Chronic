@@ -31,6 +31,14 @@ pub mut:
 	zoom     f32
 }
 
+pub struct C.Rectangle {
+pub: // if i dont mistake, we cant edit rectangle 
+	x f32
+	y f32
+	width f32
+	height f32
+}
+
 pub fn C.InitWindow(width int, height int, title &char)
 pub fn C.SetTargetFPS(fps int)
 pub fn C.WindowShouldClose() bool
@@ -67,10 +75,13 @@ pub fn C.LoadTexture(file_name &char) C.Texture
 pub fn C.DrawTexture(texture C.Texture, posX i32, posY i32, tint C.Color)
 pub fn C.DrawTextureV(texture C.Texture, position C.Vector2, tint C.Color)
 pub fn C.DrawTextureEx(texture C.Texture, position C.Vector2, rotation f32, scale f32, tint C.Color)
+pub fn C.DrawTexturePro(texture C.Texture, source C.Rectangle, dest C.Rectangle, origin C.Vector2, rotation f32, tint C.Color)
 
 // raymath
-
+pub fn C.Vector2Scale(v C.Vector2, scale f32) C.Vector2
 pub fn C.Vector2Subtract(v1 C.Vector2, v2 C.Vector2) C.Vector2
+pub fn C.Vector2Normalize(v C.Vector2) C.Vector2
+pub fn C.Vector2Add(v1 C.Vector2, v2 C.Vector2) C.Vector2
 
 // Wrapper
 
@@ -120,6 +131,18 @@ pub fn vector2_subtract(v1 C.Vector2, v2 C.Vector2) C.Vector2 {
 	return C.Vector2Subtract(v1, v2)
 }
 
+pub fn vector2_normalize(v C.Vector2) C.Vector2 {
+	return C.Vector2Normalize(v)
+}
+
+pub fn vector2_scale(v C.Vector2, scale f32) C.Vector2 {
+	return C.Vector2Scale(v, scale)
+}
+
+pub fn vector2_add(v1 C.Vector2, v2 C.Vector2) C.Vector2 {
+	return C.Vector2Add(v1, v2)
+}
+
 // wrapper for rtextures
 pub fn load_texture(file_name string) C.Texture {
 	return C.LoadTexture(file_name.str)
@@ -135,6 +158,10 @@ pub fn draw_texture_v(texture C.Texture, position C.Vector2, tint C.Color) {
 
 pub fn draw_texture_ex(texture C.Texture, position C.Vector2, rotation f32, scale f32, tint C.Color) {
 	C.DrawTextureEx(texture, position, rotation, scale, tint)
+}
+
+pub fn draw_texture_pro(texture C.Texture, source C.Rectangle, dest C.Rectangle, origin C.Vector2, rotation f32, tint C.Color) {
+	C.DrawTexturePro(texture, source, dest, origin, rotation, tint)
 }
 
 pub fn is_key_pressed(key Keys) bool {

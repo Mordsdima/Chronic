@@ -24,8 +24,8 @@ fn main() {
 	mut app_state := State{
 		camera: C.Camera2D{
 			offset: C.Vector2{
-				x: 800 / 2
-				y: 600 / 2
+				x: 1280 / 2
+				y: 720 / 2
 			}
 			target: C.Vector2{
 				x: 32
@@ -68,13 +68,19 @@ pub fn (mut app App) render() {
 	raylib.begin_mode_2d(app.userdata.camera)
 
 	// rendering a player
-	raylib.draw_texture_ex(app.userdata.textures.player, app.userdata.player_pos, app.userdata.player_ang, 1
+	//pivot := C.Vector2{ x: f32(app.userdata.textures.player.width) * 0.5, y: f32(app.userdata.textures.player.height) * 0.5 }
+
+	raylib.draw_texture_pro(app.userdata.textures.player, 
+		C.Rectangle{ width: f32(app.userdata.textures.player.width) , height: f32(app.userdata.textures.player.height) }, 
+		C.Rectangle{ x: app.userdata.player_pos.x, y: app.userdata.player_pos.y, width: f32(app.userdata.textures.player.width), height: f32(app.userdata.textures.player.height) }
+		C.Vector2{ x: f32(app.userdata.textures.player.width) / 2, y: f32(app.userdata.textures.player.width) /2  }, app.userdata.player_ang,
 		C.Color{
-		r: u8(0xff)
-		g: u8(0xff)
-		b: u8(0xff)
-		a: u8(0xff)
-	})
+			r: u8(0xff)
+			g: u8(0xff)
+			b: u8(0xff)
+			a: u8(0xff)
+		}
+	)
 
 	raylib.end_mode_2d()
 
@@ -82,26 +88,29 @@ pub fn (mut app App) render() {
 }
 
 pub fn (mut app App) update() {
-	if raylib.is_key_down(raylib.Keys.key_a) {
-		app.userdata.player_pos.x -= 0.01
-	} else if raylib.is_key_down(raylib.Keys.key_d) {
-		app.userdata.player_pos.x += 0.01
-	} else if raylib.is_key_down(raylib.Keys.key_w) {
-		app.userdata.player_pos.y -= 0.01
-	} else if raylib.is_key_down(raylib.Keys.key_s) {
-		app.userdata.player_pos.y += 0.01
-	}
+	
 
-	app.userdata.camera.target = C.Vector2 {
-		x: app.userdata.player_pos.x + 32,
-		y: app.userdata.player_pos.y + 32
-	}
+	//app.userdata.camera.target = C.Vector2 {
+	//	x: app.userdata.player_pos.x + 32,
+	//	y: app.userdata.player_pos.y + 32
+	//}
 
 	mouse_pos := raylib.get_mouse_position()
 	direction := raylib.vector2_subtract(mouse_pos, C.Vector2{ x: app.width/2, y: app.height/2 })
-	angle := f32(math.degrees(math.atan2(direction.y, direction.x)))
+	angle := f32(math.degrees(math.atan2(direction.y, direction.x))) + 6.5
 
-	app.userdata.player_ang = angle
+	println(angle)
+
+	app.userdata.player_ang = angle 
+
+	if raylib.is_key_down(raylib.Keys.key_w) {
+		mut dir := raylib.vector2_normalize(C.Vector2{ x: f32(math.cos(math.radians(app.userdata.player_ang))), y: f32(math.sin(math.radians(app.userdata.player_ang))) })
+		app.userdata.player_pos = raylib.vector2_add(app.userdata.player_pos, raylib.vector2_scale(dir, 0.1))
+		//app.userdata.player_pos += dir
+	} else if raylib.is_key_down(raylib.Keys.key_s) {
+		mut dir := raylib.vector2_normalize(C.Vector2{ x: f32(math.cos(math.radians(app.userdata.player_ang))), y: f32(math.sin(math.radians(app.userdata.player_ang))) })
+		app.userdata.player_pos = raylib.vector2_subtract(app.userdata.player_pos, raylib.vector2_scale(dir, 0.1))
+	}
 }
 
 pub fn (mut app App) deinit() {

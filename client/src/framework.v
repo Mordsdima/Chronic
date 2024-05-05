@@ -16,8 +16,8 @@ type UpdateFunction = fn ()
 @[heap]
 pub struct App {
 pub:
-	width  int    = 800
-	height int    = 600
+	width  int    = 1280
+	height int    = 720
 	title  string = '(empty)'
 pub mut:
 	userdata &Userdata = unsafe { nil }
