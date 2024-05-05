@@ -88,7 +88,6 @@ pub fn (mut app App) render() {
 }
 
 pub fn (mut app App) update() {
-	
 
 	//app.userdata.camera.target = C.Vector2 {
 	//	x: app.userdata.player_pos.x + 32,
@@ -98,9 +97,6 @@ pub fn (mut app App) update() {
 	mouse_pos := raylib.get_mouse_position()
 	direction := raylib.vector2_subtract(mouse_pos, C.Vector2{ x: app.width/2, y: app.height/2 })
 	angle := f32(math.degrees(math.atan2(direction.y, direction.x))) + 6.5
-
-	println(angle)
-
 	app.userdata.player_ang = angle 
 
 	if raylib.is_key_down(raylib.Keys.key_w) {
@@ -117,4 +113,5 @@ pub fn (mut app App) deinit() {
 }
 
 pub fn (mut app App) init() {
+	raylib.set_target_fps(60)
 }

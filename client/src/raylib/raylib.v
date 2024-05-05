@@ -51,6 +51,7 @@ pub fn C.ClearBackground(color C.Color)
 pub fn C.IsKeyPressed(key i32) bool
 pub fn C.IsKeyDown(key i32) bool
 pub fn C.GetMousePosition() C.Vector2
+pub fn C.GetFPS() i32 
 
 // rtextures (need to be enabled in raylib)
 pub struct C.Image {
@@ -123,6 +124,10 @@ pub fn clear_background(color C.Color) {
 
 pub fn get_mouse_position() C.Vector2 {
 	return C.GetMousePosition()
+}
+
+pub fn get_fps() i32 {
+	return C.GetFPS()
 }
 
 // wrapper for raymath
