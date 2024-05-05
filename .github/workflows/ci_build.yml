@@ -31,7 +31,7 @@ jobs:
             - name: Finalization
               run: |
                mkdir -p ./client/build
-               cp -r ./assets ./client/build/assets
+               cp -r ./client/assets ./client/build/assets
                mv ./client/client ./client/build/Chronical
 
             - name: Upload artifacts 
