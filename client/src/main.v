@@ -107,6 +107,7 @@ pub fn (mut app App) update() {
 		mut dir := raylib.vector2_normalize(C.Vector2{ x: f32(math.cos(math.radians(app.userdata.player_ang))), y: f32(math.sin(math.radians(app.userdata.player_ang))) })
 		app.userdata.player_pos = raylib.vector2_subtract(app.userdata.player_pos, raylib.vector2_scale(dir, 0.1))
 	}
+
 }
 
 pub fn (mut app App) deinit() {
