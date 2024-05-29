@@ -3,6 +3,7 @@ module main
 import raylib
 import log
 import math
+import engine
 
 @[heap]
 pub struct State {

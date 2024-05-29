@@ -18,7 +18,7 @@ jobs:
               uses: vlang/setup-v@v1.4
 
             - name: Raylib depends
-              run: sudo apt-get install -y libasound2-dev libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev libxcursor-dev libxinerama-dev libwayland-dev libxkbcommon-dev
+              run: sudo apt-get install -y libasound2-dev libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev libxcursor-dev libxinerama-dev libwayland-dev libxkbcommon-dev libsodium libsodium-dev
 
             - name: Build raylib
               working-directory: ./client
