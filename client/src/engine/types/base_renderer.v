@@ -1,6 +1,4 @@
-module renderers
-
-import engine
+module types
 
 // Here is configuration for renderer
 
@@ -14,10 +12,14 @@ pub:
 // And also here is interface of base renderer, render function will be later
 
 pub interface Renderer {
-	init(mut engine.Context, RendererConfig) !
-	deinit(mut engine.Context) !
-	mainloop(mut engine.Engine, mut engine.Context) !
+mut:
+	init(mut Context, RendererConfig) !
+	deinit() !
+	mainloop(App, mut Context) !
 
-	
+	// render functions
+
+	begin()
+	end()
 }
 
