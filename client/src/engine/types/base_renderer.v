@@ -21,5 +21,6 @@ mut:
 
 	begin()
 	end()
+	set_bg_color(mut Color)
 }
 

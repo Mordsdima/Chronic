@@ -17,7 +17,10 @@ mut:
 
 pub fn Engine.init_from_app(app types.App) !Engine {
 	mut e := Engine{
-		app: app
+		app: app,
+		ctx: types.Context{
+			r: unsafe { nil }
+		}
 	}
 
 	// Well, call preinit, actual context initialization is done by Engine.init
@@ -41,6 +44,8 @@ pub fn (mut e Engine) init(c types.RendererConfig) ! {
 
 		e.ctx.r = renderer
 	}
+
+	e.app.init(mut e.ctx) or { return err }
 }
 
 pub fn (mut e Engine) run() ! {
