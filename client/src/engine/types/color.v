@@ -12,9 +12,9 @@ pub mut:
 
 pub fn (mut c Color) to_gx_color() gx.Color {
 	return gx.Color{
-		r: c.r,
-		g: c.g,
-		b: c.b,
+		r: c.r
+		g: c.g
+		b: c.b
 		a: c.a
 	}
 }

@@ -6,7 +6,7 @@ module raylib
 #flag -I @VMODROOT/externals/include
 #flag -lm
 #include <raylib.h>
-#include <raymath.h> 
+#include <raymath.h>
 // ^^ for raymath bindings
 
 pub struct C.Color {
@@ -32,10 +32,10 @@ pub mut:
 }
 
 pub struct C.Rectangle {
-pub: // if i dont mistake, we cant edit rectangle 
-	x f32
-	y f32
-	width f32
+pub: // if i dont mistake, we cant edit rectangle
+	x      f32
+	y      f32
+	width  f32
 	height f32
 }
 
@@ -51,7 +51,7 @@ pub fn C.ClearBackground(color C.Color)
 pub fn C.IsKeyPressed(key i32) bool
 pub fn C.IsKeyDown(key i32) bool
 pub fn C.GetMousePosition() C.Vector2
-pub fn C.GetFPS() i32 
+pub fn C.GetFPS() i32
 
 // rtextures (need to be enabled in raylib)
 pub struct C.Image {

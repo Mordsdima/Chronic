@@ -5,13 +5,12 @@ import gg
 import gx
 import log
 
-
 @[heap]
 pub struct GGRenderer {
 mut:
 	context &gg.Context = unsafe { nil }
-	app types.App
-	ctx &types.Context = unsafe { nil }
+	app     types.App
+	ctx     &types.Context = unsafe { nil }
 }
 
 fn (mut r GGRenderer) frame(mut ctx gg.Context) {
@@ -24,19 +23,19 @@ pub fn (mut r GGRenderer) init(mut ctx types.Context, c types.RendererConfig) ! 
 
 	r.context = gg.new_context(
 		width: c.width
-		height: c.height,
+		height: c.height
 		frame_fn: r.frame
 	)
 
-	log.info("Initializated GG Renderer")
+	log.info('Initializated GG Renderer')
 }
 
 pub fn (mut r GGRenderer) deinit() ! {
-	log.info("Deinitializated GG Renderer")
+	log.info('Deinitializated GG Renderer')
 }
 
 pub fn (mut r GGRenderer) mainloop(app types.App, mut ctx types.Context) ! {
-	log.info("Mainloop of GG Renderer")
+	log.info('Mainloop of GG Renderer')
 
 	r.app = app
 

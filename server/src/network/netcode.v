@@ -10,12 +10,10 @@ pub fn init() ! {
 
 fn encrypt_aead(message &u8, message_len u64, additional &u8, additional_length u64, nonce &u8, key &u8) ! {
 	mut elen := u64(0)
-	result := libsodium.crypto_aead_xchacha20poly1305_ietf_encrypt(message, &elen, 
-																   message, message_len,
-																   additional, additional_length,
-																   unsafe{nil}, nonce, key)
+	result := libsodium.crypto_aead_xchacha20poly1305_ietf_encrypt(message, &elen, message,
+		message_len, additional, additional_length, unsafe { nil }, nonce, key)
 	if result != 0 || elen != message_len + 32 {
-		return error("An error has occured")
+		return error('An error has occured')
 	}
 }
 
@@ -25,7 +23,7 @@ fn generate_key(buf &u8, len usize) {
 
 pub fn create_private_connect_token(cid u64, timeout u32, addresses []net.Addr, userdata []u8, c2s_key []u8, s2c_key []u8) ![]u8 {
 	if addresses.len > 32 {
-		return error("Too many server addresses")
+		return error('Too many server addresses')
 	}
 
 	mut ct := []u8{}
@@ -41,25 +39,24 @@ pub fn create_private_connect_token(cid u64, timeout u32, addresses []net.Addr, 
 				unsafe {
 					ct << [u8(0x01)]
 
-					for n, addr_part in addr.str().split(":")[0].split(".") {
+					for n, addr_part in addr.str().split(':')[0].split('.') {
 						ct << u8(addr_part.int())
 					}
-					
-					ct << [u8(0), u8(0)]
-					binary.little_endian_put_u16_end(mut ct, u16(addr.str().split(":")[1].int()))
 
-					//ct << addr.addr.Ip.port
+					ct << [u8(0), u8(0)]
+					binary.little_endian_put_u16_end(mut ct, u16(addr.str().split(':')[1].int()))
+
+					// ct << addr.addr.Ip.port
 				}
 			}
 			.ip6 {
-				//unsafe {
+				// unsafe {
 				//	ct << addr.addr.Ip6.addr
 				//	ct << addr.addr.Ip6.port
 				//}
 			}
-
 			else {
-				println("Invalid ip address! Token will be 100% invalid")
+				println('Invalid ip address! Token will be 100% invalid')
 			}
 		}
 	}
@@ -80,11 +77,11 @@ pub fn encrypt_private_connect_token(private_token []u8, private_key []u8, pid u
 
 	mut additional := []u8{}
 
-	additional << "NETCODE 1.02\0".bytes()
+	additional << 'NETCODE 1.02\0'.bytes()
 	unsafe { additional.grow_len(16) }
 	binary.little_endian_put_u64_at(mut additional, pid, 13)
 	binary.little_endian_put_u64_at(mut additional, exp, 21)
-	//binary.little_endian_put_u64_at(mut additional, crt, 29)
+	// binary.little_endian_put_u64_at(mut additional, crt, 29)
 
 	// как я понял, nonce это то значение которое никогда больше не используется
 
@@ -94,13 +91,12 @@ pub fn encrypt_private_connect_token(private_token []u8, private_key []u8, pid u
 	binary.little_endian_put_u64_at(mut ct, pid, 0)
 	binary.little_endian_put_u64_at(mut ct, crt, 8)
 	binary.little_endian_put_u64_at(mut ct, exp, 16)
-	
 
 	unsafe { ct.grow_len(24) }
 
 	ct << nonce
-	
-	//encrypt_aead(&private_token, private_key.len, &additional, additional.len, &nonce, &private_key)
+
+	// encrypt_aead(&private_token, private_key.len, &additional, additional.len, &nonce, &private_key)
 
 	ct << private_token
 
@@ -116,25 +112,24 @@ pub fn encrypt_private_connect_token(private_token []u8, private_key []u8, pid u
 				unsafe {
 					ct << [u8(0x01)]
 
-					for n, addr_part in addr.str().split(":")[0].split(".") {
+					for n, addr_part in addr.str().split(':')[0].split('.') {
 						ct << u8(addr_part.int())
 					}
-					
-					ct << [u8(0), u8(0)]
-					binary.little_endian_put_u16_end(mut ct, u16(addr.str().split(":")[1].int()))
 
-					//ct << addr.addr.Ip.port
+					ct << [u8(0), u8(0)]
+					binary.little_endian_put_u16_end(mut ct, u16(addr.str().split(':')[1].int()))
+
+					// ct << addr.addr.Ip.port
 				}
 			}
 			.ip6 {
-				//unsafe {
+				// unsafe {
 				//	ct << addr.addr.Ip6.addr
 				//	ct << addr.addr.Ip6.port
 				//}
 			}
-
 			else {
-				println("Invalid ip address! Token will be 100% invalid")
+				println('Invalid ip address! Token will be 100% invalid')
 			}
 		}
 	}
@@ -148,13 +143,10 @@ pub fn encrypt_private_connect_token(private_token []u8, private_key []u8, pid u
 }
 
 pub fn create_token() {
-	
 }
 
 pub fn create_server(private_key []u8) ! {
 	if private_key.len != 32 {
-		return error("Invalid private key length!")
+		return error('Invalid private key length!')
 	}
-
-
 }

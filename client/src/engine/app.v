@@ -2,11 +2,7 @@ module engine
 
 import engine.types
 
-
-
 // this is App, (and Engine), App is just interface, while Engine manages renderers and many other shit
-
-
 
 pub struct Engine {
 pub:
@@ -17,7 +13,7 @@ mut:
 
 pub fn Engine.init_from_app(app types.App) !Engine {
 	mut e := Engine{
-		app: app,
+		app: app
 		ctx: types.Context{
 			r: unsafe { nil }
 		}
@@ -38,9 +34,12 @@ pub fn (mut e Engine) init(c types.RendererConfig) ! {
 	mut preferred_renderers := prefer_renderer() or { return err }
 
 	for mut renderer in preferred_renderers {
-		
-		renderer.init(mut e.ctx, c) or { println(err); println("Failed to initialize this renderer, trying next"); continue }
-		println("Cool")
+		renderer.init(mut e.ctx, c) or {
+			println(err)
+			println('Failed to initialize this renderer, trying next')
+			continue
+		}
+		println('Cool')
 
 		e.ctx.r = renderer
 	}
@@ -49,6 +48,5 @@ pub fn (mut e Engine) init(c types.RendererConfig) ! {
 }
 
 pub fn (mut e Engine) run() ! {
-
 	e.ctx.r.mainloop(e.app, mut e.ctx) or { return err }
 }

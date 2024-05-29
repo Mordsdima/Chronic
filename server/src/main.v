@@ -6,11 +6,11 @@ import net
 const private_key = []u8{len: 32} // temporary needs to be changed
 
 fn main() {
-	println("Initializating server....")
+	println('Initializating server....')
 	network.init() or { panic(err) }
 	mut time := 0
 	mut delta := 1 / 60
-	
+
 	/*println("yea")
 	println(
 		network.encrypt_private_connect_token(
