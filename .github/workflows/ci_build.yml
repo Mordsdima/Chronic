@@ -54,6 +54,7 @@ jobs:
           uses: vlang/setup-v@v1.4
         
         - name: Build production
+          working-directory: client
           run: v -cc msvc -gc boehm -prod .
 
         - name: Finalization
