@@ -24,6 +24,7 @@ pub fn (mut r GGRenderer) init(mut ctx types.Context, c types.RendererConfig) ! 
 	r.context = gg.new_context(
 		width: c.width
 		height: c.height
+		window_title: c.title
 		frame_fn: r.frame
 	)
 
@@ -32,6 +33,7 @@ pub fn (mut r GGRenderer) init(mut ctx types.Context, c types.RendererConfig) ! 
 
 pub fn (mut r GGRenderer) deinit() ! {
 	log.info('Deinitializated GG Renderer')
+	r.context.quit()
 }
 
 pub fn (mut r GGRenderer) mainloop(app types.App, mut ctx types.Context) ! {
@@ -54,4 +56,11 @@ pub fn (mut r GGRenderer) end() {
 
 pub fn (mut r GGRenderer) set_bg_color(mut color types.Color) {
 	r.context.set_bg_color(color.to_gx_color())
+}
+
+pub fn (mut r GGRenderer) load_image(image_file string) !int {
+	mut img := r.context.create_image(image_file)!
+	mut img_idx := r.context.cache_image(img)
+
+	return img_idx
 }

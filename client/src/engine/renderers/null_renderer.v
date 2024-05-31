@@ -36,3 +36,7 @@ pub fn (mut r NullRenderer) end() {
 
 pub fn (mut r NullRenderer) set_bg_color(mut color types.Color) {
 }
+
+pub fn (mut r NullRenderer) load_image(image_file string) !int {
+	return 0
+}

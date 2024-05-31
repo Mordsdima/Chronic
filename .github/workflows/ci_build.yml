@@ -39,3 +39,37 @@ jobs:
               with:
                 name: linux
                 path: ./client/build
+    build-windows:
+      runs-on: windows-latest
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+          with:
+            submodules: recursive
+        
+        - name: MSVC dev cmd
+          uses: ilammy/msvc-dev-cmd@v1
+
+        - name: Setup vlang
+          uses: vlang/setup-v@v1.4
+        
+        - name: Build production
+          run: v -cc msvc -gc boehm -prod .
+
+        - name: Finalization
+          run: |
+            mkdir client\build
+            xcopy /E /I client\assets client\build\assets
+            move client\client.exe client\build\Chronical.exe
+          shell: cmd
+
+        - name: Upload artifacts 
+          uses: actions/upload-artifact@v4
+          with:
+            name: windows
+            path: ./client/build
+        
+        
+        
+
+        

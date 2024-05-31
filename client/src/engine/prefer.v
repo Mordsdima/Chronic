@@ -29,6 +29,8 @@ pub fn prefer_renderer() ![]types.Renderer {
 		return [renderers.NullRenderer{}] // 3DS will be supported in one time, but not yet
 	} else if platform == 'linux' {
 		return [renderers.GGRenderer{}]
+	} else if platform == 'win' {
+		return [renderers.GGRenderer{}]
 	}
 
 	return [renderers.NullRenderer{}]

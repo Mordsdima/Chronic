@@ -7,6 +7,7 @@ pub struct RendererConfig {
 pub:
 	width int
 	height int
+	title string
 }
 
 // And also here is interface of base renderer, render function will be later
@@ -22,5 +23,6 @@ mut:
 	begin()
 	end()
 	set_bg_color(mut Color)
+	load_image(string) !int
 }
 

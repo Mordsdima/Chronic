@@ -13,11 +13,13 @@ fn main() {
 
 	mut eng := engine.Engine.init_from_app(app)!
 
-	eng.init() or { panic(err) }
+	eng.init(
+		title: "Chronical; Built by V: ${@VHASH} (hash)"
+	) or { panic(err) }
 
 	eng.run() or { panic(err) }
 
-	println('Running game!')
+	eng.end() or { panic(err) }
 }
 
 pub fn (c Chronical) preinit() ! {

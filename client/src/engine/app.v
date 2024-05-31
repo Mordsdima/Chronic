@@ -1,6 +1,7 @@
 module engine
 
 import engine.types
+import log
 
 // this is App, (and Engine), App is just interface, while Engine manages renderers and many other shit
 
@@ -39,14 +40,23 @@ pub fn (mut e Engine) init(c types.RendererConfig) ! {
 			println('Failed to initialize this renderer, trying next')
 			continue
 		}
-		println('Cool')
+		
+		log.info("Initializated renderer!")
 
 		e.ctx.r = renderer
+
+		break
 	}
 
-	e.app.init(mut e.ctx) or { return err }
+	e.app.init(mut e.ctx)!
 }
 
 pub fn (mut e Engine) run() ! {
-	e.ctx.r.mainloop(e.app, mut e.ctx) or { return err }
+	e.ctx.r.mainloop(e.app, mut e.ctx)!
+}
+
+pub fn (mut e Engine) end() ! {
+	// Deinitialize
+	e.ctx.r.deinit()!
+	e.app.deinit()!
 }
