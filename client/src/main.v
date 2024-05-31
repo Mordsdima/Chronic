@@ -2,6 +2,7 @@ module main
 
 import engine
 import engine.types
+import time
 
 // This is literally rewrite of old main.v
 
@@ -26,16 +27,16 @@ pub fn (c Chronical) preinit() ! {
 }
 
 pub fn (c Chronical) init(mut ctx types.Context) ! {
-	ctx.r.set_bg_color(mut types.Color{})
+	ctx.r.set_bg_color(mut types.Color{r: 255, g: 255, b: 255})
 }
 
 pub fn (c Chronical) deinit() ! {
 }
 
-pub fn (c Chronical) update(delta i32, mut ctx types.Context) ! {
+pub fn (c Chronical) update(delta f32, mut ctx types.Context) ! {
 }
 
-pub fn (c Chronical) draw(delta i32, mut ctx types.Context) ! {
+pub fn (c Chronical) draw(delta f32, mut ctx types.Context) ! {
 	ctx.r.begin()
 
 	ctx.r.end()
