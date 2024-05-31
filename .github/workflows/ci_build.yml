@@ -55,7 +55,7 @@ jobs:
         
         - name: Build production
           working-directory: client
-          run: v -cc msvc -gc boehm -prod .
+          run: v -cc msvc -autofree -prod .
 
         - name: Finalization
           run: |
