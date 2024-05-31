@@ -52,7 +52,6 @@ pub fn (mut r GGRenderer) init(mut ctx types.Context, c types.RendererConfig) ! 
 		height: c.height
 		window_title: c.title
 		frame_fn: r.render_thread
-		native_rendering: true
 	)
 
 	log.info('Initializated GG Renderer')
