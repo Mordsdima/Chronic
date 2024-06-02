@@ -7,6 +7,8 @@ import time
 // This is literally rewrite of old main.v
 
 pub struct Chronical {
+mut:
+	player_img int
 }
 
 fn main() {
@@ -15,7 +17,7 @@ fn main() {
 	mut eng := engine.Engine.init_from_app(app)!
 
 	eng.init(
-		title: "Chronical; Built by V: ${@VHASH} (hash)"
+		title: 'Chronical; Built by V: ${@VHASH} (hash)'
 	) or { panic(err) }
 
 	eng.run() or { panic(err) }
@@ -23,21 +25,29 @@ fn main() {
 	eng.end() or { panic(err) }
 }
 
-pub fn (c Chronical) preinit() ! {
+pub fn (mut c Chronical) preinit() ! {
 }
 
-pub fn (c Chronical) init(mut ctx types.Context) ! {
-	ctx.r.set_bg_color(mut types.Color{r: 255, g: 255, b: 255})
+pub fn (mut c Chronical) init(mut ctx types.Context) ! {
+	ctx.r.set_bg_color(mut types.Color{ r: 255, g: 255, b: 255 })
+
+	c.player_img = ctx.r.load_image("assets/player.png")!
+
+	println(c.player_img)
+
+	println("Now game is initialized!")
 }
 
-pub fn (c Chronical) deinit() ! {
+pub fn (mut c Chronical) deinit() ! {
 }
 
-pub fn (c Chronical) update(delta f32, mut ctx types.Context) ! {
+pub fn (mut c Chronical) update(delta f32, mut ctx types.Context) ! {
 }
 
-pub fn (c Chronical) draw(delta f32, mut ctx types.Context) ! {
+pub fn (mut c Chronical) draw(delta f32, mut ctx types.Context) ! {
 	ctx.r.begin()
+
+	ctx.r.draw_image(c.player_img, 0, 0)!
 
 	ctx.r.end()
 }

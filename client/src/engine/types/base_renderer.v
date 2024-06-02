@@ -16,7 +16,7 @@ pub interface Renderer {
 mut:
 	init(mut Context, RendererConfig) !
 	deinit() !
-	mainloop(App, mut Context) !
+	mainloop(mut App, mut Context) !
 
 	// render functions
 
@@ -24,5 +24,7 @@ mut:
 	end()
 	set_bg_color(mut Color)
 	load_image(string) !int
+	unload_image(int) !
+	draw_image(int, f32, f32) !
 }
 

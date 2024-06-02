@@ -6,7 +6,7 @@ import log
 // this is App, (and Engine), App is just interface, while Engine manages renderers and many other shit
 
 pub struct Engine {
-pub:
+pub mut:
 	app types.App
 mut:
 	ctx types.Context
@@ -40,8 +40,8 @@ pub fn (mut e Engine) init(c types.RendererConfig) ! {
 			println('Failed to initialize this renderer, trying next')
 			continue
 		}
-		
-		log.info("Initializated renderer!")
+
+		log.info('Initializated renderer!')
 
 		e.ctx.r = renderer
 
@@ -52,7 +52,7 @@ pub fn (mut e Engine) init(c types.RendererConfig) ! {
 }
 
 pub fn (mut e Engine) run() ! {
-	e.ctx.r.mainloop(e.app, mut e.ctx)!
+	e.ctx.r.mainloop(mut e.app, mut e.ctx)!
 }
 
 pub fn (mut e Engine) end() ! {

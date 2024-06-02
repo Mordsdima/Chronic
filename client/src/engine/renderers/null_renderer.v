@@ -16,7 +16,7 @@ pub fn (mut r NullRenderer) deinit() ! {
 	log.info('Deinitializated NULL Renderer')
 }
 
-pub fn (mut r NullRenderer) mainloop(app types.App, mut ctx types.Context) ! {
+pub fn (mut r NullRenderer) mainloop(mut app types.App, mut ctx types.Context) ! {
 	log.info('Mainloop of NULL Renderer')
 
 	for {
@@ -39,4 +39,10 @@ pub fn (mut r NullRenderer) set_bg_color(mut color types.Color) {
 
 pub fn (mut r NullRenderer) load_image(image_file string) !int {
 	return 0
+}
+
+pub fn (mut r NullRenderer) unload_image(image int) ! {
+}
+
+pub fn (mut r NullRenderer) draw_image(image int, x f32, y f32) ! {
 }

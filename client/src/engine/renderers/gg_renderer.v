@@ -62,7 +62,7 @@ pub fn (mut r GGRenderer) deinit() ! {
 	r.context.quit()
 }
 
-pub fn (mut r GGRenderer) mainloop(app types.App, mut ctx types.Context) ! {
+pub fn (mut r GGRenderer) mainloop(mut app types.App, mut ctx types.Context) ! {
 	log.info('Mainloop of GG Renderer')
 
 	r.app = app
@@ -94,4 +94,10 @@ pub fn (mut r GGRenderer) load_image(image_file string) !int {
 
 pub fn (mut r GGRenderer) unload_image(image int) ! {
 	r.context.remove_cached_image_by_idx(image)
+}
+
+pub fn (mut r GGRenderer) draw_image(image int, x f32, y f32) ! {
+	mut img := r.context.get_cached_image_by_idx(image)
+
+	r.context.draw_image(x, y, img.width, img.height, img)
 }
