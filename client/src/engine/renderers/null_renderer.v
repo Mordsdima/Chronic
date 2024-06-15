@@ -46,3 +46,14 @@ pub fn (mut r NullRenderer) unload_image(image int) ! {
 
 pub fn (mut r NullRenderer) draw_image(image int, x f32, y f32) ! {
 }
+
+pub fn (mut r NullRenderer) draw_text(x int, y int, text string) ! {
+}
+
+pub fn (mut r NullRenderer) get_text_width(s string) int {
+	return 0
+}
+
+pub fn (mut r NullRenderer) get_text_height() int {
+	return 0
+}

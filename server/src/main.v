@@ -1,7 +1,7 @@
 module main
 
 import network
-import net
+import superernd.cn
 
 const private_key = []u8{len: 32} // temporary needs to be changed
 

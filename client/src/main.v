@@ -9,6 +9,7 @@ import time
 pub struct Chronical {
 mut:
 	player_img int
+	mui engine.MicroUI
 }
 
 fn main() {
@@ -36,6 +37,8 @@ pub fn (mut c Chronical) init(mut ctx types.Context) ! {
 	println(c.player_img)
 
 	println("Now game is initialized!")
+	c.mui = engine.MicroUI{}
+	c.mui.init(mut ctx.r)!
 }
 
 pub fn (mut c Chronical) deinit() ! {
@@ -49,5 +52,12 @@ pub fn (mut c Chronical) draw(delta f32, mut ctx types.Context) ! {
 
 	ctx.r.draw_image(c.player_img, 0, 0)!
 
+	c.mui.begin()
+
+	c.mui.end()
+
+
 	ctx.r.end()
+
+
 }

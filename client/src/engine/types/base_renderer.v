@@ -26,5 +26,8 @@ mut:
 	load_image(string) !int
 	unload_image(int) !
 	draw_image(int, f32, f32) !
+	draw_text(int, int, string) !
+	get_text_width(string) int
+	get_text_height() int
 }
 

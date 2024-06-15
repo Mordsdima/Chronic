@@ -101,3 +101,15 @@ pub fn (mut r GGRenderer) draw_image(image int, x f32, y f32) ! {
 
 	r.context.draw_image(x, y, img.width, img.height, img)
 }
+
+pub fn (mut r GGRenderer) draw_text(x int, y int, text string) ! {
+	r.context.draw_text_def(x, y, text)
+}
+
+pub fn (mut r GGRenderer) get_text_width(s string) int {
+	return r.context.text_width(s)
+}
+
+pub fn (mut r GGRenderer) get_text_height() int {
+	return r.context.text_height('abc')
+}
