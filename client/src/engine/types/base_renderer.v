@@ -29,5 +29,9 @@ mut:
 	draw_text(int, int, string) !
 	get_text_width(string) int
 	get_text_height() int
+	scissor(Rect)
+	draw_rect(Rect, mut Color)
+	get_mouse_x() i32
+	get_mouse_y() i32
 }
 

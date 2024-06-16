@@ -57,3 +57,17 @@ pub fn (mut r NullRenderer) get_text_width(s string) int {
 pub fn (mut r NullRenderer) get_text_height() int {
 	return 0
 }
+
+pub fn (mut r NullRenderer) scissor(rect types.Rect) {	
+}
+
+pub fn (mut r NullRenderer) draw_rect(rect types.Rect, mut color types.Color) {
+}
+
+pub fn (mut r NullRenderer) get_mouse_x() i32 {
+	return 0
+}
+
+pub fn (mut r NullRenderer) get_mouse_y() i32 {
+	return 0
+}

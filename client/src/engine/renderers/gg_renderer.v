@@ -10,7 +10,7 @@ import time
 pub struct GGRenderer {
 mut:
 	context &gg.Context = unsafe { nil }
-	app     types.App
+	app     types.App = voidptr(0)
 	ctx     &types.Context = unsafe { nil }
 }
 
@@ -112,4 +112,20 @@ pub fn (mut r GGRenderer) get_text_width(s string) int {
 
 pub fn (mut r GGRenderer) get_text_height() int {
 	return r.context.text_height('abc')
+}
+
+pub fn (mut r GGRenderer) scissor(rect types.Rect) {
+	r.context.scissor_rect(rect.x, rect.y, rect.w, rect.h)
+}
+
+pub fn (mut r GGRenderer) draw_rect(rect types.Rect, mut color types.Color) {
+	r.context.draw_rect_filled(rect.x, rect.y, rect.w, rect.h, color.to_gx_color())
+}
+
+pub fn (mut r GGRenderer) get_mouse_x() i32 {
+	return i32(r.context.mouse_pos_x)
+}
+
+pub fn (mut r GGRenderer) get_mouse_y() i32 {
+	return i32(r.context.mouse_pos_y)
 }
