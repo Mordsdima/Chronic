@@ -4,8 +4,9 @@ its still in development, written in V
 
 ## build
 
-about dependecies read [here](https://github.com/raysan5/raylib/wiki/Working-on-GNU-Linux
-)
+### client:
+
+about dependecies read [here](https://github.com/raysan5/raylib/wiki/Working-on-GNU-Linux)
 
 you also need vlang
 
@@ -21,6 +22,18 @@ make devbuild # (development) same as ^^
 make devrun # (development) simply v . && ./client, read about depends ^^^
 ```
 
+### api:
+
+via docker:
+
+just `docker compose up`
+
+manually:
+
+install sqlite3-devel (or similar) and vlang, and thats all what you need
+
+and then just in console `v run .`
+
 ## license
 
-its MIT (maybe soon will be relicensed in ISC), read more in [LICENSE file](./LICENSE)
+its ISC, read more in [LICENSE file](./LICENSE)

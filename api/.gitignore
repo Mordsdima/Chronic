@@ -1,15 +1,11 @@
 # Binaries for programs and plugins
 main
-client/client
-server/server
-api/api
+api
 *.exe
 *.exe~
 *.so
 *.dylib
 *.dll
-
-auth_server/venv
 
 # Ignore binary output folders
 bin/
