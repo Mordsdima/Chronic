@@ -11,7 +11,7 @@ RUN apk add --no-cache git build-base sqlite-dev libsodium-dev && \
 
 WORKDIR /build/v
 
-RUN make && /build/v/v install SuperErnD.cn && /build/v/v install elitru.jwt
+RUN make && /build/v/v install SuperErnD.cn && /build/v/v install SuperErnD.jwt
 
 RUN rm -rf doc examples/ tutorials/ vc/ ./vlib/v/tests/ \
  ./vlib/v/slow_tests/ ./vlib/v/embed_file/tests/ \

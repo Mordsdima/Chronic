@@ -3,7 +3,7 @@ module main
 import veb
 import veb.auth
 import db.tables
-import elitru.jwt
+import superernd.jwt
 import net.http
 import json
 
@@ -66,7 +66,7 @@ pub fn (mut app App) login(mut ctx Context) veb.Result {
 	user := app.find_user_by_name(name) or {
         return ctx.request_error('Bad credentials')
     }
-	
+
 	if !auth.compare_password_with_hash(password, user.salt, user.password_hash) {
 		return ctx.request_error('Bad credentials')
 	}

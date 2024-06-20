@@ -1,7 +1,7 @@
 module main
 
 import db.tables
-import elitru.jwt
+import superernd.jwt
 
 pub struct IpApiResponse {
 pub:
