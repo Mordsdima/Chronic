@@ -32,15 +32,15 @@ pub fn (mut c Chronical) init(mut ctx types.Context) ! {
 	ctx.r.set_bg_color(mut types.Color{ r: 170, g: 170, b: 170 })
 
 	c.player_img = ctx.r.load_image("assets/player.png")!
-	c.mui = engine.MicroUI{}
-	c.mui.init(mut ctx.r)!
+	//c.mui = engine.MicroUI{}
+	//c.mui.init(mut ctx.r)!
 }
 
 pub fn (mut c Chronical) deinit() ! {
 }
 
 pub fn (mut c Chronical) update(delta f32, mut ctx types.Context) ! {
-	c.mui.update()
+	//c.mui.update()
 }
 
 pub fn (mut c Chronical) draw(delta f32, mut ctx types.Context) ! {
@@ -48,7 +48,7 @@ pub fn (mut c Chronical) draw(delta f32, mut ctx types.Context) ! {
 
 	ctx.r.draw_image(c.player_img, 0, 0)!
 
-	c.mui.begin()
+	/*c.mui.begin()
 
 	if c.mui.begin_window("hello world", types.Rect{
 		x: 350, y: 40, w: 300, h: 200
@@ -58,7 +58,7 @@ pub fn (mut c Chronical) draw(delta f32, mut ctx types.Context) ! {
 
 	c.mui.end()
 
-	c.mui.draw()!
+	c.mui.draw()!*/
 
 	ctx.r.end()
 

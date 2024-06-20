@@ -1,4 +1,4 @@
-# hello, im glad to see what you want to contribute to chronical, but you need to stick to rules of contributing.
+# hi welcome to hell
 
 ## rules
 

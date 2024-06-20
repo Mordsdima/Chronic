@@ -1,0 +1,17 @@
+[db]
+backend = "sqlite"
+host = "./main.db" # on sqlite its file to "where a db???"
+port = 0
+user = ""
+password = ""
+dbname = ""
+
+[saver]
+backend = "local"
+backend_connect = "/data/data" # enter here extra data to connect (like a dir for local, etc.)
+
+[game]
+server = [
+    "127.0.0.1:10007"
+]
+private_token_key = "" # base 64 key, SHOULD BE SAME ON THIS SERVER AND GAME OTHERWISE CLIENT WONT CONNECT

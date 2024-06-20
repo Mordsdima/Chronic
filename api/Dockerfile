@@ -42,6 +42,8 @@ VOLUME ["/data"]
 
 # As API is already compiled with everything inside we just should install sqlite & run it (config will be little later)
 
-RUN apk add --no-cache sqlite-libs
+# btw init also env
+RUN apk add --no-cache sqlite-libs && \
+    mkdir -p /data/data
 
 ENTRYPOINT [ "./api" ]

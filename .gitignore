@@ -3,13 +3,14 @@ main
 client/client
 server/server
 api/api
+api/config.toml
+api/data/*
+!api/data/.gitkeep
 *.exe
 *.exe~
 *.so
 *.dylib
 *.dll
-
-auth_server/venv
 
 # Ignore binary output folders
 bin/

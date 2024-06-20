@@ -4,11 +4,11 @@ its still in development, written in V
 
 ## build
 
+before everything install vlang and SuperErnD.cn package (just `v install SuperErnD.cn`)
+
 ### client:
 
 about dependecies read [here](https://github.com/raysan5/raylib/wiki/Working-on-GNU-Linux)
-
-you also need vlang
 
 to build client (server not yet ready) you need run that (for linux):
 
