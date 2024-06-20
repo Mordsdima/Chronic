@@ -3,6 +3,7 @@ module main
 import veb
 import veb.auth
 import db.tables
+import elitru.jwt
 import net.http
 import json
 
@@ -13,6 +14,10 @@ enum UserStatus {
 	muted   = 1 // User is just muted, nothing else
 	limited = 2 // User is limited, for example user cant see other users, and other users cant see the user
 	banned  = 3 // User is banned, user cant enter the game at all
+}
+
+struct UserClaims {
+	id int
 }
 
 @[post]
@@ -38,7 +43,12 @@ pub fn (mut app App) register(mut ctx Context) veb.Result {
 	}
 
 	if x := app.find_user_by_name(name) {
-		token := app.auth.add_token(x.id) or { '' }
+		alg := jwt.new_algorithm(jwt.AlgorithmType.hs256)
+		token := jwt.encode<UserClaims>(UserClaims{
+			id: x.id
+		}, alg, app.salt, 168 * 60 * 60) or { 
+			return ctx.request_error("Something went wrong while creating token!")
+		}
 		return ctx.json({
 			'token': token
 		})
@@ -56,12 +66,17 @@ pub fn (mut app App) login(mut ctx Context) veb.Result {
 	user := app.find_user_by_name(name) or {
         return ctx.request_error('Bad credentials')
     }
-	// Verify user password using veb.auth
+	
 	if !auth.compare_password_with_hash(password, user.salt, user.password_hash) {
 		return ctx.request_error('Bad credentials')
 	}
-	// Find the user token in the Token table
-	token := app.auth.add_token(user.id) or { '' }
+	
+	alg := jwt.new_algorithm(jwt.AlgorithmType.hs256)
+	token := jwt.encode<UserClaims>(UserClaims{
+		id: user.id
+	}, alg, app.salt, 168 * 60 * 60) or { 
+		return ctx.request_error("Something went wrong while creating token!")
+	}
 
 	return ctx.json({
 		'token': token

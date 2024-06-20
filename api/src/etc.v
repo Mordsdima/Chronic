@@ -11,9 +11,17 @@ fn get_commit() ?string {
 
 @[get]
 pub fn (mut app App) version(mut ctx Context) veb.Result {
-	commit := (get_commit() or { "0" })
+	commit := (get_commit() or { "UNKNOWN_COMMIT" })
 	return ctx.json({
 		'version': '0.0.0-DEV+${commit}'
 		'os':      os.user_os()
+	})
+}
+
+pub fn (mut ctx Context) not_found() veb.Result {
+	// 404
+    ctx.res.set_status(.not_found)
+    return ctx.json({
+		"error": "404 bro"
 	})
 }

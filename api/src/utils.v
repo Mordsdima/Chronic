@@ -1,6 +1,7 @@
 module main
 
 import db.tables
+import elitru.jwt
 
 pub struct IpApiResponse {
 pub:
@@ -30,8 +31,12 @@ pub fn (mut app App) find_user_by_id(id int) ?tables.User {
 }
 
 pub fn (mut app App) auth_user(mut ctx Context) !tables.User {
-	token := app.auth.find_token(ctx.get_header(.authorization)!) or { return error("Token not found.") }
+	alg := jwt.new_algorithm(jwt.AlgorithmType.hs256)
+	claims_decoded := jwt.verify<UserClaims>(ctx.get_header(.authorization)!, alg, app.salt) or {
+		return err
+	}
+	//token := app.auth.find_token(ctx.get_header(.authorization)!) or { return error("Token not found.") }
 
 
-	return app.find_user_by_id(token.user_id) or { return error("User not found.") }
+	return app.find_user_by_id(claims_decoded.id) or { return error("User not found.") }
 }
