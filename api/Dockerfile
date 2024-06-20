@@ -6,12 +6,12 @@ FROM alpine:latest as build
 
 WORKDIR /build
 
-RUN apk add --no-cache git build-base sqlite-dev && \ 
+RUN apk add --no-cache git build-base sqlite-dev libsodium-dev && \
  git clone https://github.com/vlang/v
 
 WORKDIR /build/v
 
-RUN make
+RUN make && /build/v/v install SuperErnD.cn
 
 RUN rm -rf doc examples/ tutorials/ vc/ ./vlib/v/tests/ \
  ./vlib/v/slow_tests/ ./vlib/v/embed_file/tests/ \
@@ -43,7 +43,7 @@ VOLUME ["/data"]
 # As API is already compiled with everything inside we just should install sqlite & run it (config will be little later)
 
 # btw init also env
-RUN apk add --no-cache sqlite-libs && \
+RUN apk add --no-cache sqlite-libs libsodium && \
     mkdir -p /data/data
 
 ENTRYPOINT [ "./api" ]
