@@ -81,7 +81,8 @@ pub fn (mut app App) me(mut ctx Context) veb.Result {
 		"bio": user.bio,
 		"avatar": user.avatar,
 		"banner": user.banner,
-		"country": user.country
+		"country": user.country,
+		"id": user.id
 	})
 }
 

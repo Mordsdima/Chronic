@@ -24,7 +24,8 @@ pub fn (mut app App) user_by_id(mut ctx Context, id int) veb.Result {
 		"bio": user.bio,
 		"avatar": user.avatar,
 		"banner": user.banner,
-		"country": user.country
+		"country": user.country,
+		"id": user.id
 	})
 }
 
@@ -50,6 +51,7 @@ pub fn (mut app App) user_by_name(mut ctx Context) veb.Result {
 		"bio": user.bio,
 		"avatar": user.avatar,
 		"banner": user.banner,
-		"country": user.country
+		"country": user.country,
+		"id": user.id
 	})
 }
