@@ -129,3 +129,6 @@ pub fn (mut r GGRenderer) get_mouse_x() i32 {
 pub fn (mut r GGRenderer) get_mouse_y() i32 {
 	return i32(r.context.mouse_pos_y)
 }
+
+pub fn (mut r GGRenderer) begin_c2d(camera types.Camera2D) ! {
+}

@@ -26,7 +26,7 @@ pub fn (mut app App) register(mut ctx Context) veb.Result {
 
 	password := ctx.query['password'] or { return ctx.request_error('Password is not provided.') }
 
-	country := (json.decode(IpApiResponse, http.get_text("http://ip-api.com/json/${ctx.ip()}?fields=countryCode")) or {}).country
+	country := (json.decode(IpApiResponse, http.get_text('http://ip-api.com/json/${ctx.ip()}?fields=countryCode')) or {}).country
 
 	salt := auth.generate_salt()
 	new_user := tables.User{
@@ -39,15 +39,15 @@ pub fn (mut app App) register(mut ctx Context) veb.Result {
 		insert new_user into tables.User
 	} or {
 		println(err)
-		return ctx.request_error("Something went wrong while creating account.")
+		return ctx.request_error('Something went wrong while creating account.')
 	}
 
 	if x := app.find_user_by_name(name) {
 		alg := jwt.new_algorithm(jwt.AlgorithmType.hs256)
-		token := jwt.encode<UserClaims>(UserClaims{
+		token := jwt.encode[UserClaims](UserClaims{
 			id: x.id
-		}, alg, app.salt, 168 * 60 * 60) or { 
-			return ctx.request_error("Something went wrong while creating token!")
+		}, alg, app.salt, 168 * 60 * 60) or {
+			return ctx.request_error('Something went wrong while creating token!')
 		}
 		return ctx.json({
 			'token': token
@@ -63,19 +63,17 @@ pub fn (mut app App) login(mut ctx Context) veb.Result {
 
 	password := ctx.query['password'] or { return ctx.request_error('Bad credentials.') }
 
-	user := app.find_user_by_name(name) or {
-        return ctx.request_error('Bad credentials')
-    }
+	user := app.find_user_by_name(name) or { return ctx.request_error('Bad credentials') }
 
 	if !auth.compare_password_with_hash(password, user.salt, user.password_hash) {
 		return ctx.request_error('Bad credentials')
 	}
-	
+
 	alg := jwt.new_algorithm(jwt.AlgorithmType.hs256)
-	token := jwt.encode<UserClaims>(UserClaims{
+	token := jwt.encode[UserClaims](UserClaims{
 		id: user.id
-	}, alg, app.salt, 168 * 60 * 60) or { 
-		return ctx.request_error("Something went wrong while creating token!")
+	}, alg, app.salt, 168 * 60 * 60) or {
+		return ctx.request_error('Something went wrong while creating token!')
 	}
 
 	return ctx.json({
@@ -87,17 +85,17 @@ pub fn (mut app App) me(mut ctx Context) veb.Result {
 	user := app.auth_user(mut ctx) or {
 		ctx.res.set_status(.unauthorized)
 		return ctx.json({
-			"error": "Token not provided/invalid"
+			'error': 'Token not provided/invalid'
 		})
 	}
 
 	return ctx.json({
-		"name": user.name,
-		"bio": user.bio,
-		"avatar": user.avatar,
-		"banner": user.banner,
-		"country": user.country,
-		"id": user.id.str()
+		'name':    user.name
+		'bio':     user.bio
+		'avatar':  user.avatar
+		'banner':  user.banner
+		'country': user.country
+		'id':      user.id.str()
 	})
 }
 
@@ -106,25 +104,25 @@ pub fn (mut app App) modify(mut ctx Context) veb.Result {
 	user := app.auth_user(mut ctx) or {
 		ctx.res.set_status(.unauthorized)
 		return ctx.json({
-			"error": "Token not provided/invalid"
+			'error': 'Token not provided/invalid'
 		})
 	}
 
 	modificated := json.decode(AccountModificationRequest, ctx.res.body) or {
 		ctx.res.set_status(.unauthorized)
 		return ctx.json({
-			"error": "Failed to parse body"
+			'error': 'Failed to parse body'
 		})
 	}
 
-	if modificated.key == "bio" {
+	if modificated.key == 'bio' {
 		sql app.db {
 			update tables.User set bio = modificated.value where id == user.id
 		} or { println(err) }
 	} else {
 		ctx.res.set_status(.bad_request)
 		return ctx.json({
-			"error": "Bad Request: No such modification"
+			'error': 'Bad Request: No such modification'
 		})
 	}
 

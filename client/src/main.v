@@ -8,7 +8,7 @@ import engine.types
 pub struct Chronical {
 mut:
 	player_img int
-	mui engine.MicroUI
+	nk engine.Nuklear
 }
 
 fn main() {

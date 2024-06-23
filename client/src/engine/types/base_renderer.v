@@ -33,5 +33,6 @@ mut:
 	draw_rect(Rect, mut Color)
 	get_mouse_x() i32
 	get_mouse_y() i32
+	begin_c2d(Camera2D) !
 }
 

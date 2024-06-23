@@ -1,23 +1,50 @@
 module main
 
-import network
+import os
+import log
+import toml
 import superernd.cn
+import encoding.base64
 
-const private_key = []u8{len: 32} // temporary needs to be changed
+fn new_incoming(client cn.SClient) {
+	log.info('New incoming connection from ${client.addr.str()}')
+}
+
+fn update_thread(srv cn.Server) ! {
+	for {
+	}
+}
 
 fn main() {
-	println('Initializating server....')
-	network.init() or { panic(err) }
-	mut time := 0
-	mut delta := 1 / 60
+	log.info('Initializating server....')
 
-	/*println("yea")
-	println(
-		network.encrypt_private_connect_token(
-			network.create_private_connect_token(0, 0, [net.Addr{}], ) or { panic(err) },
-			[]u8{},
-			0, 0
-		) or { panic(err) }
-		
-	)*/
+	mut conf_file := 'config.toml'
+
+	if 'CONFIG' in os.environ() {
+		conf_file = os.environ()['CONFIG']
+	}
+
+	log.info("Trying to loading config from '${conf_file}'..")
+
+	mut conf := toml.parse_file(conf_file) or {
+		log.error('Failed to read config!')
+		panic(err)
+	}
+
+	key := base64.decode(conf.value('auth.private_token_key').string())
+
+	mut srv := cn.Server{
+		key: key
+		protocol_id: 0xdeaddeaddeaddead
+	}
+
+	// ПОДНЯТЬ СЕРВЕР НА НОГИ ЕСЛИ НЕ ПИДОР
+	log.info('Server is now working at ${conf.value('server.listen').string()}')
+	srv.init(conf.value('server.listen').string())!
+
+	spawn update_thread(srv)
+
+	for {
+		srv.update()!
+	}
 }

@@ -1,0 +1,5 @@
+[auth]
+private_token_key = ""
+
+[server]
+listen = "127.0.0.1:10007"
