@@ -6,7 +6,9 @@ import toml
 import superernd.cn
 import encoding.base64
 
-fn new_incoming(client cn.SClient) {
+fn new_incoming(receiver voidptr, nl voidptr, client &cn.SClient) {
+	mut c := *client
+	mut s := *c.server
 	log.info('New incoming connection from ${client.addr.str()}')
 }
 
@@ -41,6 +43,9 @@ fn main() {
 	// ПОДНЯТЬ СЕРВЕР НА НОГИ ЕСЛИ НЕ ПИДОР
 	log.info('Server is now working at ${conf.value('server.listen').string()}')
 	srv.init(conf.value('server.listen').string())!
+
+	// register events
+	srv.eb.subscriber.subscribe("connect", new_incoming)
 
 	spawn update_thread(srv)
 

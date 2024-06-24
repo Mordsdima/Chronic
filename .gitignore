@@ -2,6 +2,7 @@
 main
 client/client
 server/server
+server/config.toml
 api/api
 api/config.toml
 api/data/*
