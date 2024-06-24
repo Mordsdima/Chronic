@@ -1,5 +1,0 @@
-[auth]
-private_token_key = "bRXS0El4o5bguN+J+qqoRKMUiWXTQdoDvbKYTqXMKW4="
-
-[server]
-listen = "127.0.0.1:10007"
