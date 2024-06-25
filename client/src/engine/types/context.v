@@ -4,4 +4,5 @@ module types
 pub struct Context {
 pub mut:
 	r Renderer
+	cs Screen
 }

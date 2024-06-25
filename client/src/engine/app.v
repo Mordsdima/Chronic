@@ -7,7 +7,8 @@ import log
 
 pub struct Engine {
 pub mut:
-	app types.App
+	app     types.App
+	cur_scr types.Screen = types.EmptyScreen{}
 mut:
 	ctx types.Context
 }
@@ -48,7 +49,7 @@ pub fn (mut e Engine) init(c types.RendererConfig) ! {
 		break
 	}
 
-	e.app.init(mut e.ctx)!
+	e.ctx.r.init_app(mut e.app)!
 }
 
 pub fn (mut e Engine) run() ! {

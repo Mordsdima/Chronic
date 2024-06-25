@@ -35,6 +35,7 @@ fn (mut r GGRenderer) game_thread() {
 		}
 
 		r.app.update(f32(elapsed) / 1000.0, mut r.ctx) or { panic(err) }
+		r.ctx.cs.update(f32(elapsed) / 1000.0, mut r.ctx) or { panic(err) }
 
 		last_called = time.now().unix_milli()
 	}
@@ -42,6 +43,11 @@ fn (mut r GGRenderer) game_thread() {
 
 fn (mut r GGRenderer) render_thread(mut ctx gg.Context) {
 	r.app.draw(f32(sapp.frame_duration()), mut r.ctx) or { panic(err) }
+	r.ctx.cs.draw(f32(sapp.frame_duration()), mut r.ctx) or { panic(err) }
+}
+
+fn (mut r GGRenderer) init_fn(mut ctx gg.Context) {
+	r.app.init(mut r.ctx) or { panic(err) }
 }
 
 pub fn (mut r GGRenderer) init(mut ctx types.Context, c types.RendererConfig) ! {
@@ -51,7 +57,8 @@ pub fn (mut r GGRenderer) init(mut ctx types.Context, c types.RendererConfig) ! 
 		width: c.width
 		height: c.height
 		window_title: c.title
-		frame_fn: r.render_thread
+		frame_fn: r.render_thread,
+		init_fn: r.init_fn
 	)
 
 	log.info('Initializated GG Renderer')
@@ -106,6 +113,15 @@ pub fn (mut r GGRenderer) draw_text(x int, y int, text string) ! {
 	r.context.draw_text_def(x, y, text)
 }
 
+pub fn (mut r GGRenderer) draw_ctext(x int, y int, text string, mut color types.Color) ! {
+	r.context.draw_text2(gg.DrawTextParams{
+		x: x,
+		y: y,
+		text: text,
+		color: color.to_gx_color()
+	})
+}
+
 pub fn (mut r GGRenderer) get_text_width(s string) int {
 	return r.context.text_width(s)
 }
@@ -115,11 +131,11 @@ pub fn (mut r GGRenderer) get_text_height() int {
 }
 
 pub fn (mut r GGRenderer) scissor(rect types.Rect) {
-	r.context.scissor_rect(rect.x, rect.y, rect.w, rect.h)
+	r.context.scissor_rect(int(rect.x), int(rect.y), int(rect.w), int(rect.h))
 }
 
 pub fn (mut r GGRenderer) draw_rect(rect types.Rect, mut color types.Color) {
-	r.context.draw_rect_filled(rect.x, rect.y, rect.w, rect.h, color.to_gx_color())
+	r.context.draw_rect_empty(rect.x, rect.y, rect.w, rect.h, color.to_gx_color())
 }
 
 pub fn (mut r GGRenderer) get_mouse_x() i32 {
@@ -131,4 +147,18 @@ pub fn (mut r GGRenderer) get_mouse_y() i32 {
 }
 
 pub fn (mut r GGRenderer) begin_c2d(camera types.Camera2D) ! {
+}
+
+pub fn (mut r GGRenderer) get_dpi() f32 {
+	return gg.dpi_scale()
+}
+
+pub fn (mut r GGRenderer) get_res() (int, int) {
+	res := r.context.window_size()
+	return res.width, res.height
+}
+
+pub fn (mut r GGRenderer) init_app(mut app types.App) ! {
+	r.app = app
+	//r.context.config.init_fn = r.init_fn
 }

@@ -8,7 +8,7 @@ import engine.types
 pub struct Chronical {
 mut:
 	player_img int
-	nk engine.Nuklear
+	ui engine.UI
 }
 
 fn main() {
@@ -32,8 +32,8 @@ pub fn (mut c Chronical) init(mut ctx types.Context) ! {
 	ctx.r.set_bg_color(mut types.Color{ r: 170, g: 170, b: 170 })
 
 	c.player_img = ctx.r.load_image("assets/player.png")!
-	//c.mui = engine.MicroUI{}
-	//c.mui.init(mut ctx.r)!
+	c.ui = engine.UI{}
+	c.ui.init(mut ctx.r)!
 }
 
 pub fn (mut c Chronical) deinit() ! {
@@ -59,6 +59,12 @@ pub fn (mut c Chronical) draw(delta f32, mut ctx types.Context) ! {
 	c.mui.end()
 
 	c.mui.draw()!*/
+
+	c.ui.begin()
+
+	c.ui.label(types.Rect{ x: 0.4, y: 0.45, w: 0.2, h: 0.05 }, "Hello world!", mut types.Color{})!
+
+	c.ui.end()
 
 	ctx.r.end()
 
