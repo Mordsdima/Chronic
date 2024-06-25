@@ -17,7 +17,8 @@ pub fn Engine.init_from_app(app types.App) !Engine {
 	mut e := Engine{
 		app: app
 		ctx: types.Context{
-			r: unsafe { nil }
+			r: unsafe { nil },
+			cs: types.EmptyScreen{}
 		}
 	}
 

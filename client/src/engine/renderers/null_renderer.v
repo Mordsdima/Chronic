@@ -88,5 +88,8 @@ pub fn (mut r NullRenderer) get_res() (int, int) {
 }
 
 pub fn (mut r NullRenderer) init_app(mut app types.App) ! {
-	app.init(mut types.Context{})!
+	app.init(mut types.Context{
+		r: unsafe { nil }
+		cs: types.EmptyScreen{}
+	})!
 }

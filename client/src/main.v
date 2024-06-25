@@ -1,5 +1,6 @@
 module main
 
+import screens
 import engine
 import engine.types
 
@@ -34,39 +35,16 @@ pub fn (mut c Chronical) init(mut ctx types.Context) ! {
 	c.player_img = ctx.r.load_image("assets/player.png")!
 	c.ui = engine.UI{}
 	c.ui.init(mut ctx.r)!
+
+	// set screen lol
+	ctx.set_screen(mut screens.MenuScreen{}, mut c)!
 }
 
 pub fn (mut c Chronical) deinit() ! {
 }
 
 pub fn (mut c Chronical) update(delta f32, mut ctx types.Context) ! {
-	//c.mui.update()
 }
 
 pub fn (mut c Chronical) draw(delta f32, mut ctx types.Context) ! {
-	ctx.r.begin()
-
-	ctx.r.draw_image(c.player_img, 0, 0)!
-
-	/*c.mui.begin()
-
-	if c.mui.begin_window("hello world", types.Rect{
-		x: 350, y: 40, w: 300, h: 200
-	}) {
-		c.mui.end_window()
-	}
-
-	c.mui.end()
-
-	c.mui.draw()!*/
-
-	c.ui.begin()
-
-	c.ui.label(types.Rect{ x: 0.4, y: 0.45, w: 0.2, h: 0.05 }, "Hello world!", mut types.Color{})!
-
-	c.ui.end()
-
-	ctx.r.end()
-
-
 }
