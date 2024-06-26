@@ -76,6 +76,10 @@ pub fn (mut r NullRenderer) get_mouse_y() i32 {
 	return 0
 }
 
+pub fn (mut r NullRenderer) get_mouse_s() types.MouseState {
+	return types.MouseState.invalid
+}
+
 pub fn (mut r NullRenderer) begin_c2d(camera types.Camera2D) ! {
 }
 

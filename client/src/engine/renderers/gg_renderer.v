@@ -110,7 +110,11 @@ pub fn (mut r GGRenderer) draw_image(image int, x f32, y f32) ! {
 }
 
 pub fn (mut r GGRenderer) draw_text(x int, y int, text string) ! {
-	r.context.draw_text_def(x, y, text)
+	r.context.draw_text2(gg.DrawTextParams{
+		x: x,
+		y: y,
+		text: text
+	})
 }
 
 pub fn (mut r GGRenderer) draw_ctext(x int, y int, text string, mut color types.Color) ! {
@@ -118,7 +122,7 @@ pub fn (mut r GGRenderer) draw_ctext(x int, y int, text string, mut color types.
 		x: x,
 		y: y,
 		text: text,
-		color: color.to_gx_color()
+		color: color.to_gx_color(),
 	})
 }
 
@@ -144,6 +148,10 @@ pub fn (mut r GGRenderer) get_mouse_x() i32 {
 
 pub fn (mut r GGRenderer) get_mouse_y() i32 {
 	return i32(r.context.mouse_pos_y)
+}
+
+pub fn (mut r GGRenderer) get_mouse_s() types.MouseState {
+	return types.MouseState(r.context.mouse_buttons)
 }
 
 pub fn (mut r GGRenderer) begin_c2d(camera types.Camera2D) ! {

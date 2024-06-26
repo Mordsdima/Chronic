@@ -10,6 +10,13 @@ pub:
 	title string
 }
 
+pub enum MouseState {
+	invalid
+	left
+	right
+	middle
+}
+
 // And also here is interface of base renderer, render function will be later
 
 pub interface Renderer {
@@ -35,6 +42,7 @@ mut:
 	draw_rect(Rect, mut Color)
 	get_mouse_x() i32
 	get_mouse_y() i32
+	get_mouse_s() MouseState
 	begin_c2d(Camera2D) !
 	get_dpi() f32
 	get_res() (int, int)
