@@ -14,4 +14,4 @@ backend_connect = "/data/data" # enter here extra data to connect (like a dir fo
 server = [
     "127.0.0.1:10007"
 ]
-private_token_key = "" # base 64 key, SHOULD BE SAME ON THIS SERVER AND GAME OTHERWISE CLIENT WONT CONNECT
+private_token_key = "" # base 64 key, SHOULD BE SAME ON THIS SERVER AND GAME SERVER OTHERWISE CLIENT WONT CONNECT

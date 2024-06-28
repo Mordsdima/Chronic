@@ -20,9 +20,13 @@ pub fn (mut ms MenuScreen) draw(delta f32, mut ctx types.Context) ! {
 
 	ms.ui.begin()
 
-	ms.ui.label(types.Rect{ x: 0.4, y: 0.35, w: 0.2, h: 0.1 }, "бомж версия хроника", mut types.Color{})!
+	ms.ui.label(types.Rect{ x: 0.4, y: 0.4, w: 0.2, h: 0.05 }, "бомж версия хроника", mut types.Color{})!
 
 	if ms.ui.button(types.Rect{ x: 0.4, y: 0.45, w: 0.2, h: 0.05 }, "(Try) join the game", mut types.Color{a: 255})! {
+		println("cool")
+	}
+
+	if ms.ui.button(types.Rect{ x: 0.4, y: 0.51, w: 0.2, h: 0.05 }, "(Try) login", mut types.Color{a: 255})! {
 		println("cool")
 	}
 
