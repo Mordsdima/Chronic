@@ -65,7 +65,7 @@ pub fn (mut r NullRenderer) get_text_height() int {
 	return 0
 }
 
-pub fn (mut r NullRenderer) scissor(rect types.Rect) {	
+pub fn (mut r NullRenderer) scissor(rect types.Rect) {
 }
 
 pub fn (mut r NullRenderer) get_mouse_x() i32 {

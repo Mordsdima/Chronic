@@ -5,9 +5,9 @@ module types
 @[params]
 pub struct RendererConfig {
 pub:
-	width int
+	width  int
 	height int
-	title string
+	title  string
 }
 
 pub enum MouseState {
@@ -25,9 +25,7 @@ mut:
 	init_app(mut App) !
 	deinit() !
 	mainloop(mut App, mut Context) !
-
 	// render functions
-
 	begin()
 	end()
 	set_bg_color(mut Color)
@@ -47,4 +45,3 @@ mut:
 	get_dpi() f32
 	get_res() (int, int)
 }
-

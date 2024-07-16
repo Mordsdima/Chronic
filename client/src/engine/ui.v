@@ -8,9 +8,9 @@ import engine.renderers
 @[heap]
 pub struct UI {
 mut:
-	renderer  	types.Renderer = renderers.NullRenderer{}
-	isinited  	bool
-	scale       f32
+	renderer types.Renderer = renderers.NullRenderer{}
+	isinited bool
+	scale    f32
 pub mut:
 	default_wid f32 = 0.30
 	default_hei f32 = 0.10
@@ -18,8 +18,10 @@ pub mut:
 }
 
 pub fn (mut ui UI) init(mut renderer types.Renderer) ! {
-	if ui.isinited { return error("UI is already initializated!") }
-	
+	if ui.isinited {
+		return error('UI is already initializated!')
+	}
+
 	ui.isinited = true
 	ui.renderer = renderer
 }
@@ -38,10 +40,10 @@ pub fn (mut ui UI) label(relRect types.Rect, text string, mut color types.Color)
 	h := relRect.h * whei
 
 	ui.renderer.draw_rect(types.Rect{
-		x: x,
-		y: y, 
-		w: w,
-		h: h,
+		x: x
+		y: y
+		w: w
+		h: h
 	}, mut color)
 
 	tw := ui.renderer.get_text_width(text)
@@ -59,10 +61,10 @@ pub fn (mut ui UI) button(relRect types.Rect, text string, mut color types.Color
 	h := relRect.h * whei
 
 	ui.renderer.draw_rect(types.Rect{
-		x: x,
-		y: y, 
-		w: w,
-		h: h,
+		x: x
+		y: y
+		w: w
+		h: h
 	}, mut color)
 
 	tw := ui.renderer.get_text_width(text)
@@ -73,7 +75,7 @@ pub fn (mut ui UI) button(relRect types.Rect, text string, mut color types.Color
 
 	mx := ui.renderer.get_mouse_x()
 	my := ui.renderer.get_mouse_y()
-	return x <= mx && mx <= x + w && y <= my && my <= y + h && (ui.renderer.get_mouse_s() == .left) 
+	return x <= mx && mx <= x + w && y <= my && my <= y + h && ui.renderer.get_mouse_s() == .left
 }
 
 pub fn (mut ui UI) update() {

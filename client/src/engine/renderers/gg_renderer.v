@@ -9,8 +9,8 @@ import time
 @[heap]
 pub struct GGRenderer {
 mut:
-	context &gg.Context = unsafe { nil }
-	app     types.App = voidptr(0)
+	context &gg.Context    = unsafe { nil }
+	app     types.App      = types.empty_app
 	ctx     &types.Context = unsafe { nil }
 }
 
@@ -57,7 +57,7 @@ pub fn (mut r GGRenderer) init(mut ctx types.Context, c types.RendererConfig) ! 
 		width: c.width
 		height: c.height
 		window_title: c.title
-		frame_fn: r.render_thread,
+		frame_fn: r.render_thread
 		init_fn: r.init_fn
 	)
 
@@ -111,18 +111,18 @@ pub fn (mut r GGRenderer) draw_image(image int, x f32, y f32) ! {
 
 pub fn (mut r GGRenderer) draw_text(x int, y int, text string) ! {
 	r.context.draw_text2(gg.DrawTextParams{
-		x: x,
-		y: y,
+		x: x
+		y: y
 		text: text
 	})
 }
 
 pub fn (mut r GGRenderer) draw_ctext(x int, y int, text string, mut color types.Color) ! {
 	r.context.draw_text2(gg.DrawTextParams{
-		x: x,
-		y: y,
-		text: text,
-		color: color.to_gx_color(),
+		x: x
+		y: y
+		text: text
+		color: color.to_gx_color()
 	})
 }
 
@@ -168,5 +168,5 @@ pub fn (mut r GGRenderer) get_res() (int, int) {
 
 pub fn (mut r GGRenderer) init_app(mut app types.App) ! {
 	r.app = app
-	//r.context.config.init_fn = r.init_fn
+	// r.context.config.init_fn = r.init_fn
 }

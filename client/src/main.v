@@ -9,7 +9,7 @@ import engine.types
 pub struct Chronical {
 mut:
 	player_img int
-	ui engine.UI
+	ui         engine.UI
 }
 
 fn main() {
@@ -32,7 +32,7 @@ pub fn (mut c Chronical) preinit() ! {
 pub fn (mut c Chronical) init(mut ctx types.Context) ! {
 	ctx.r.set_bg_color(mut types.Color{ r: 170, g: 170, b: 170 })
 
-	c.player_img = ctx.r.load_image("assets/player.png")!
+	c.player_img = ctx.r.load_image('assets/player.png')!
 	c.ui = engine.UI{}
 	c.ui.init(mut ctx.r)!
 
