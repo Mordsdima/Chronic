@@ -1,13 +1,3 @@
-# ⚠️ Maintenance notice ⚠️
-
-## Chronical is now slowly developed due to electrical problems
-
-> Is that end?
-
-> No, its not end, its a temporary notice, maybe when electricy will be more stable (no shutdowns), that notice will be removed.
-
-# ⚠️ Maintenance notice ⚠️
-
 # hello this is chronical
 
 its still in development, written in V

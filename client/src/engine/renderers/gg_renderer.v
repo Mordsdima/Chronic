@@ -157,6 +157,9 @@ pub fn (mut r GGRenderer) get_mouse_s() types.MouseState {
 pub fn (mut r GGRenderer) begin_c2d(camera types.Camera2D) ! {
 }
 
+pub fn (mut r GGRenderer) end_c2d() ! {
+}
+
 pub fn (mut r GGRenderer) get_dpi() f32 {
 	return gg.dpi_scale()
 }

@@ -51,6 +51,18 @@ pub fn (mut ms MenuScreen) draw(delta f32, mut ctx types.Context) ! {
 		ms.block = true
 	}
 
+	$if debug {
+		if ms.ui.button(types.Rect{ x: 0.92, y: 0.965, w: 0.08, h: 0.035 }, 'enter debugger', mut
+			types.Color{
+				a: 255
+		})!
+		{
+			$dbg
+		}
+	}
+	
+
+
 	ms.ui.end()
 
 	ctx.r.end()

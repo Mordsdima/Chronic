@@ -4,13 +4,13 @@ MAKE ?= make
 libraylib.a: 
 	cd raylib/src && $(MAKE) && cd ../.. 
 
-build: libraylib.a
+build: 
 	$(V) -prod .
 
-devbuild: libraylib.a
+devbuild: 
 	$(V) .
 
-rundev: libraylib.a
+rundev: 
 	$(V) run .
 
 .PHONY: libraylib.a build devbuild rundev

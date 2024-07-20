@@ -42,6 +42,7 @@ mut:
 	get_mouse_y() i32
 	get_mouse_s() MouseState
 	begin_c2d(Camera2D) !
+	end_c2d() !
 	get_dpi() f32
 	get_res() (int, int)
 }

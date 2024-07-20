@@ -38,8 +38,8 @@ pub fn (mut e Engine) init(c types.RendererConfig) ! {
 
 	for mut renderer in preferred_renderers {
 		renderer.init(mut e.ctx, c) or {
-			println(err)
-			println('Failed to initialize this renderer, trying next')
+			log.error(err.str())
+			log.error('Failed to initialize this renderer, trying next')
 			continue
 		}
 

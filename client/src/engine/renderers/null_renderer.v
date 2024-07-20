@@ -83,6 +83,9 @@ pub fn (mut r NullRenderer) get_mouse_s() types.MouseState {
 pub fn (mut r NullRenderer) begin_c2d(camera types.Camera2D) ! {
 }
 
+pub fn (mut r NullRenderer) end_c2d() ! {
+}
+
 pub fn (mut r NullRenderer) get_dpi() f32 {
 	return 0
 }
