@@ -9,6 +9,11 @@ jobs:
         runs-on: ubuntu-latest
 
         steps: 
+            - name: Generate build number
+              id: buildnum
+              uses: onyxmueller/build-tag-number@v1
+              with:
+                token: ${{secrets.github_token}}    
             - name: Checkout
               uses: actions/checkout@v4
               with:
@@ -33,12 +38,22 @@ jobs:
                mkdir -p ./client/build
                cp -r ./client/assets ./client/build/assets
                mv ./client/client ./client/build/Chronical
+               zip -r ./client/build-linux.zip ./client/build 
 
             - name: Upload artifacts 
               uses: actions/upload-artifact@v4
               with:
                 name: linux
                 path: ./client/build
+            
+            - name: Create Github Release
+              uses: ncipollo/release-action@v1
+              with:
+                artifacts: "./client/build-linux.zip"
+                replacesArtifacts: false
+                token: ${{ secrets.TOKEN }}
+                allowUpdates: true
+                name: Dev ${{ steps.buildnum.outputs.build_number }}
     build-windows:
       runs-on: windows-latest
       steps:

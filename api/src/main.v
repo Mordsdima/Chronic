@@ -36,7 +36,7 @@ fn main() {
 		conf_file = os.environ()['CONFIG']
 	}
 
-	log.info("Trying to loading config from '${conf_file}'..")
+	log.info("Trying to load config from '${conf_file}'..")
 
 	mut conf := toml.parse_file(conf_file) or {
 		log.error('Failed to read config!')

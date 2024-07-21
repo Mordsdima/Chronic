@@ -1,7 +1,9 @@
 module screens
 
+import config
 import engine
 import engine.types
+import log
 
 pub struct MenuScreen {
 mut:
@@ -20,6 +22,20 @@ pub fn (mut ms MenuScreen) deinit() ! {}
 
 pub fn (mut ms MenuScreen) update(delta f32, mut ctx types.Context) ! {}
 
+pub fn (mut ms MenuScreen) login(mut ctx types.Context) {
+	log.info("Hello from login function! Trying to log in into the account")
+
+	mut login_info := config.get_login_information()
+
+	if login_info.auth_token == "" {
+		log.error("No valid auth token found. Login again!")
+		ctx.set_screen(mut MenuScreen{}, mut ms.app) or { 
+			log.error(err.str())
+		}
+		return 
+	}
+}
+
 pub fn (mut ms MenuScreen) draw(delta f32, mut ctx types.Context) ! {
 	if ms.block {
 		return
@@ -35,8 +51,12 @@ pub fn (mut ms MenuScreen) draw(delta f32, mut ctx types.Context) ! {
 		types.Color{
 		a: 255
 	})!
-	{
-		ctx.set_screen(mut ServerConnectScreen{}, mut ms.app)!
+	{	
+		//println(loading_state)
+		(*loading_state).server_connect()
+		// start a thread of login
+		spawn ms.login(mut ctx)
+		ctx.set_screen(mut LoadingScreen{}, mut ms.app)!
 		// Block further render!
 		ms.block = true
 	}

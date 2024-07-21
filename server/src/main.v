@@ -12,7 +12,7 @@ fn new_incoming(receiver voidptr, nl voidptr, client &cn.SClient) {
 	log.info('New incoming connection from ${client.addr.str()}')
 }
 
-fn update_thread(srv cn.Server) ! {
+fn update_thread(srv &cn.Server) ! {
 	for {
 	}
 }
@@ -26,7 +26,7 @@ fn main() {
 		conf_file = os.environ()['CONFIG']
 	}
 
-	log.info("Trying to loading config from '${conf_file}'..")
+	log.info("Trying to load config from '${conf_file}'..")
 
 	mut conf := toml.parse_file(conf_file) or {
 		log.error('Failed to read config!')
@@ -47,7 +47,7 @@ fn main() {
 	// register events
 	srv.eb.subscriber.subscribe("connect", new_incoming)
 
-	spawn update_thread(srv)
+	spawn update_thread(&srv)
 
 	for {
 		srv.update()!
