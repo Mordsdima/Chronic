@@ -1,6 +1,7 @@
 module screens
 
 import config
+import network
 import engine
 import engine.types
 import log
@@ -22,12 +23,20 @@ pub fn (mut ms MenuScreen) deinit() ! {}
 
 pub fn (mut ms MenuScreen) update(delta f32, mut ctx types.Context) ! {}
 
-pub fn (mut ms MenuScreen) login(mut ctx types.Context) {
-	log.info("Hello from login function! Trying to log in into the account")
+pub fn (mut ms MenuScreen) join(mut ctx types.Context) {
+	log.info("Hello from join function! Trying to log in into the account")
 
 	mut login_info := config.get_login_information()
 
 	if login_info.auth_token == "" {
+		log.error("No valid auth token found. Login again!")
+		ctx.set_screen(mut MenuScreen{}, mut ms.app) or { 
+			log.error(err.str())
+		}
+		return 
+	}
+
+	(*network.gapi).login_via_auth_token(login_info.auth_token) or {
 		log.error("No valid auth token found. Login again!")
 		ctx.set_screen(mut MenuScreen{}, mut ms.app) or { 
 			log.error(err.str())
@@ -55,7 +64,7 @@ pub fn (mut ms MenuScreen) draw(delta f32, mut ctx types.Context) ! {
 		//println(loading_state)
 		(*loading_state).server_connect()
 		// start a thread of login
-		spawn ms.login(mut ctx)
+		spawn ms.join(mut ctx)
 		ctx.set_screen(mut LoadingScreen{}, mut ms.app)!
 		// Block further render!
 		ms.block = true

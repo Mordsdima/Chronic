@@ -55,6 +55,7 @@ jobs:
                 allowUpdates: true
                 name: Dev ${{ steps.buildnum.outputs.build_number }}
                 tag: dev-${{ steps.buildnum.outputs.build_number }}
+                prerelease: true
     build-windows:
       runs-on: windows-latest
       steps:

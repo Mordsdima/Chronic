@@ -22,9 +22,19 @@ struct UserClaims {
 
 @[post]
 pub fn (mut app App) register(mut ctx Context) veb.Result {
-	name := ctx.query['name'] or { return ctx.request_error('Username is not provided.') }
+	name := ctx.query['name'] or {
+		ctx.res.set_status(.bad_request)
+		return ctx.json({
+			'error': 'Username is not provided.'
+		})
+	}
 
-	password := ctx.query['password'] or { return ctx.request_error('Password is not provided.') }
+	password := ctx.query['password'] or {
+		ctx.res.set_status(.bad_request)
+		return ctx.json({
+			'error': 'Password is not provided.'
+		})
+	}
 
 	country := (json.decode(IpApiResponse, http.get_text('http://ip-api.com/json/${ctx.ip()}?fields=countryCode')) or {}).country
 
@@ -39,7 +49,10 @@ pub fn (mut app App) register(mut ctx Context) veb.Result {
 		insert new_user into tables.User
 	} or {
 		println(err)
-		return ctx.request_error('Something went wrong while creating account.')
+		ctx.res.set_status(.internal_server_error)
+		return ctx.json({
+			'error': 'Something went wrong while creating account.'
+		})
 	}
 
 	if x := app.find_user_by_name(name) {
@@ -47,33 +60,59 @@ pub fn (mut app App) register(mut ctx Context) veb.Result {
 		token := jwt.encode[UserClaims](UserClaims{
 			id: x.id
 		}, alg, app.salt, 168 * 60 * 60) or {
-			return ctx.request_error('Something went wrong while creating token!')
+			ctx.res.set_status(.internal_server_error)
+			return ctx.json({
+				'error': 'Something went wrong while creating account.'
+			})
 		}
 		return ctx.json({
 			'token': token
 		})
 	}
-
-	return ctx.request_error('Something went wrong. Account is seems not registered, just try again register.')
+	ctx.res.set_status(.internal_server_error)
+	return ctx.json({
+		'error': 'Something went wrong. Account is seems not registered, just try again register.'
+	})
 }
 
 @[post]
 pub fn (mut app App) login(mut ctx Context) veb.Result {
-	name := ctx.query['name'] or { return ctx.request_error('Bad credentials.') }
+	name := ctx.query['name'] or {
+		ctx.res.set_status(.unauthorized)
+		return ctx.json({
+			'error': 'Bad credentials.'
+		})
+	}
 
-	password := ctx.query['password'] or { return ctx.request_error('Bad credentials.') }
+	password := ctx.query['password'] or {
+		ctx.res.set_status(.unauthorized)
+		return ctx.json({
+			'error': 'Bad credentials.'
+		})
+	}
 
-	user := app.find_user_by_name(name) or { return ctx.request_error('Bad credentials') }
+	user := app.find_user_by_name(name) or {
+		ctx.res.set_status(.unauthorized)
+		return ctx.json({
+			'error': 'Bad credentials.'
+		})
+	}
 
 	if !auth.compare_password_with_hash(password, user.salt, user.password_hash) {
-		return ctx.request_error('Bad credentials')
+		ctx.res.set_status(.unauthorized)
+		return ctx.json({
+			'error': 'Bad credentials.'
+		})
 	}
 
 	alg := jwt.new_algorithm(jwt.AlgorithmType.hs256)
 	token := jwt.encode[UserClaims](UserClaims{
 		id: user.id
 	}, alg, app.salt, 168 * 60 * 60) or {
-		return ctx.request_error('Something went wrong while creating token!')
+		ctx.res.set_status(.internal_server_error)
+		return ctx.json({
+			'error': 'Something went wrong while creating token!'
+		})
 	}
 
 	return ctx.json({
