@@ -51,7 +51,7 @@ jobs:
               with:
                 artifacts: "./client/build-linux.zip"
                 replacesArtifacts: false
-                token: ${{ secrets.TOKEN }}
+                token: ${{secrets.github_token}}
                 allowUpdates: true
                 name: Dev ${{ steps.buildnum.outputs.build_number }}
     build-windows:
