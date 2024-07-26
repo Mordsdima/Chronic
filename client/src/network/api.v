@@ -39,6 +39,26 @@ pub fn (mut api API) login_via_auth_token(auth_token string) ! {
 
 	if response.status_code != 200 {
 		return error("Token is not valid seems")
+	} else {
+		// now we should write token!
+		api.auth_token = auth_token
 	}
 }
 
+// get connection token
+pub fn (mut api API) connect() !string { 
+	if api.auth_token == '' {
+		return error("no valid token")
+	}
+
+	mut response := http.fetch(
+		url: "${api.api_url}/initiate_connect",
+		header: http.new_header(key: .authorization, value: api.auth_token)
+	)!
+
+	if response.status_code != 200 {
+		return error("something went wrong!")
+	} else {
+		return response.body
+	}
+}

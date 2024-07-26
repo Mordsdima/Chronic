@@ -70,7 +70,7 @@ fn main() {
 		saver: saver
 	}
 
-	for s in conf.value('game.servers').array() {
+	for s in conf.value('game.server').array() {
 		app.game_servers << s.string()
 	}
 	app.private_token_key = conf.value('game.private_token_key').string()

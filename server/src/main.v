@@ -7,8 +7,8 @@ import superernd.cn
 import encoding.base64
 
 fn new_incoming(receiver voidptr, nl voidptr, client &cn.SClient) {
-	mut c := *client
-	mut s := *c.server
+	//mut c := *client
+	//mut s := *c.server
 	log.info('New incoming connection from ${client.addr.str()}')
 }
 

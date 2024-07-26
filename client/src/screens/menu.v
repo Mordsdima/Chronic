@@ -23,25 +23,42 @@ pub fn (mut ms MenuScreen) deinit() ! {}
 
 pub fn (mut ms MenuScreen) update(delta f32, mut ctx types.Context) ! {}
 
+pub fn (mut ms MenuScreen) generic_error_handler(mut ctx types.Context, error IError) {
+	log.error(error.str())
+	ctx.set_screen(mut MenuScreen{}, mut ms.app) or { 
+		log.error(err.str())
+	}
+}
+
 pub fn (mut ms MenuScreen) join(mut ctx types.Context) {
 	log.info("Hello from join function! Trying to log in into the account")
 
 	mut login_info := config.get_login_information()
 
 	if login_info.auth_token == "" {
-		log.error("No valid auth token found. Login again!")
+		log.error("no really valid token found.")
 		ctx.set_screen(mut MenuScreen{}, mut ms.app) or { 
 			log.error(err.str())
 		}
 		return 
 	}
 
-	(*network.gapi).login_via_auth_token(login_info.auth_token) or {
-		log.error("No valid auth token found. Login again!")
-		ctx.set_screen(mut MenuScreen{}, mut ms.app) or { 
-			log.error(err.str())
-		}
-		return 
+	(*network.gapi).login_via_auth_token(login_info.auth_token) or { // actually we should try refresh token, but now thats not even at API realizated
+		ms.generic_error_handler(mut ctx, err)
+		return
+	}
+
+	token := (*network.gapi).connect() or {
+		ms.generic_error_handler(mut ctx, err)
+		return
+	}
+	
+	println(token)
+
+	(*network.gmanager).connect(token) or { // trash code
+		log.error("Failed to connect!")
+		ms.generic_error_handler(mut ctx, err)
+		return
 	}
 }
 
