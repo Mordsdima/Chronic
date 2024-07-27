@@ -23,7 +23,7 @@ jobs:
               uses: vlang/setup-v@v1.4
             
             - name: Chronic depends
-              run: v install SuperErnD.cn && sudo apt install -y libsodium-dev libgl1-mesa-dev libglu1-mesa-dev 
+              run: v install SuperErnD.cn && sudo apt install -y libsodium-dev libasound2-dev libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev libxcursor-dev libxinerama-dev libwayland-dev libxkbcommon-dev
 
             - name: Build production
               working-directory: ./client
