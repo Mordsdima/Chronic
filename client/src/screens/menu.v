@@ -52,14 +52,13 @@ pub fn (mut ms MenuScreen) join(mut ctx types.Context) {
 		ms.generic_error_handler(mut ctx, err)
 		return
 	}
-	
-	println(token)
 
 	(*network.gmanager).connect(token) or { // trash code
-		log.error("Failed to connect!")
 		ms.generic_error_handler(mut ctx, err)
 		return
 	}
+
+	log.info("yay! connected to server over chronic-network")
 }
 
 pub fn (mut ms MenuScreen) draw(delta f32, mut ctx types.Context) ! {

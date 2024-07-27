@@ -37,7 +37,7 @@ fn main() {
 
 	mut srv := cn.Server{
 		key: key
-		protocol_id: 0xdeaddeaddeaddead
+		protocol_id: 0xdeadbeef
 	}
 
 	// ПОДНЯТЬ СЕРВЕР НА НОГИ ЕСЛИ НЕ ПИДОР

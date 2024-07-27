@@ -19,7 +19,7 @@ pub fn (mut app App) initiate_connect(mut ctx Context) veb.Result {
 		nonce: cn.generate_random(24)
 		key: base64.decode(app.private_token_key)
 		exp: time.now().unix_milli() + 30 * 1000 + 1000 * app.game_servers.len
-		protocol_id: 0xdeaddeaddeaddead
+		protocol_id: 0xdeadbeef
 		timeout: 1
 		s2c_key: cn.generate_random(32)
 		c2s_key: cn.generate_random(32)
