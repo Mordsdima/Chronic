@@ -60,6 +60,7 @@ pub fn (mut r GGRenderer) init(mut ctx types.Context, c types.RendererConfig) ! 
 		frame_fn: r.render_thread
 		init_fn: r.init_fn
 	)
+	r.context.fps.show = true
 
 	log.info('Initializated GG Renderer')
 }

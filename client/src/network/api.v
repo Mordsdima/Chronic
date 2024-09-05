@@ -14,9 +14,7 @@ pub struct APIError {
 
 const api_endpoint = $d("api", "http://localhost:8080") // define your own API by adding -d api=server
 
-pub const gapi = create_api() // global api
-
-fn create_api() &API {
+pub fn create_api() &API {
 	mut api := API{}
 
 	return &api

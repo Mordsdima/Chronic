@@ -5,6 +5,7 @@ import log
 import toml
 import superernd.cn
 import encoding.base64
+import eventbus
 
 fn new_incoming(receiver voidptr, nl voidptr, client &cn.SClient) {
 	//mut c := *client
@@ -43,6 +44,7 @@ fn main() {
 	// ПОДНЯТЬ СЕРВЕР НА НОГИ ЕСЛИ НЕ ПИДОР
 	log.info('Server is now working at ${conf.value('server.listen').string()}')
 	srv.init(conf.value('server.listen').string())!
+	srv.eb = eventbus.new[string]()
 
 	// register events
 	srv.eb.subscriber.subscribe("connect", new_incoming)

@@ -1,8 +1,10 @@
 module main
 
+import log
 import screens
 import engine
 import engine.types
+import globals
 
 // This is literally rewrite of old main.v
 
@@ -27,6 +29,10 @@ fn main() {
 }
 
 pub fn (mut c Chronical) preinit() ! {
+	(*globals.gmanager).init() or { // actually we should try refresh token, but now thats not even at API realizated
+		log.error(err.str())
+		return
+	}
 }
 
 pub fn (mut c Chronical) init(mut ctx types.Context) ! {

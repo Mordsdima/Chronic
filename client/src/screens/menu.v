@@ -1,7 +1,7 @@
 module screens
 
 import config
-import network
+import globals
 import engine
 import engine.types
 import log
@@ -43,17 +43,17 @@ pub fn (mut ms MenuScreen) join(mut ctx types.Context) {
 		return 
 	}
 
-	(*network.gapi).login_via_auth_token(login_info.auth_token) or { // actually we should try refresh token, but now thats not even at API realizated
+	(*globals.gapi).login_via_auth_token(login_info.auth_token) or { // actually we should try refresh token, but now thats not even at API realizated
 		ms.generic_error_handler(mut ctx, err)
 		return
 	}
 
-	token := (*network.gapi).connect() or {
+	token := (*globals.gapi).connect() or {
 		ms.generic_error_handler(mut ctx, err)
 		return
 	}
 
-	(*network.gmanager).connect(token) or { // trash code
+	(*globals.gmanager).connect(token) or { // trash code
 		ms.generic_error_handler(mut ctx, err)
 		return
 	}

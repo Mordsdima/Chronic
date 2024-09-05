@@ -3,7 +3,7 @@ module types
 import encoding.binary
 
 pub struct Writer {
-mut:
+pub mut:
 	buffer []u8
 }
 
